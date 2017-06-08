@@ -40,8 +40,7 @@ void		*malloc(size_t size)
 {
 	if (size < TINY_MAX)
 		return (malloc_tiny_block(size));
-	else if (size < SMALL_MAX)
+	if (size < SMALL_MAX)
 		return (malloc_small_block(size));
-	else
-		return (malloc_large_block(size));
+	return (malloc_large_block(size));
 }
