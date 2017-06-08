@@ -77,9 +77,18 @@ char	malloc_tiny_zone(size_t size)
 	t_block_zone	*block;
 
 	if (g_zones.tiny_block == NULL)
-		g_zones.tiny_block = allocate_page(NULL, g_page_size);
-	if (g_zones.tiny_block == NULL)
-		return (0);
+	{
+		g_zones.tiny_block = allocate_page(NULL, g_page_size);//fix page size
+		if (g_zones.tiny_block == NULL)
+			return (0);
+	}
+	else
+	{
+		block = g_zones.tiny_block;
+		while (block->next != NULL)
+			block = block->next;
+		//alocate
+	}
 	return (1);
 }
 
