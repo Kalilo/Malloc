@@ -29,10 +29,16 @@ typedef struct			s_small_list
 	unsigned short		next : 15;
 }						t_small_list;
 
+typedef struct			s_page_size
+{
+	int							pages;
+	int							size;
+}						t_page_size;
+
 typedef struct			s_block_zone
 {
 	struct s_block_zone	*next;
-	unsigned char		pages;
+	t_page_size			ps;
 }						t_block_zone;
 
 typedef struct			s_malloc_zones
@@ -42,12 +48,6 @@ typedef struct			s_malloc_zones
 	t_block_zone		*large_block;
 }						t_malloc_zones;
 
-typedef struct			s_page_size
-{
-	int							pages;
-	int							size;
-}						t_page_size;
-
 t_malloc_zones			g_zones;
 int						g_page_size;
 
@@ -56,16 +56,17 @@ void	init_memory(void) {
 	g_page_size = getpagesize();
 }
 
-int		round_to_pagesize(int size)
+t_page_size	round_to_pagesize(int size)
 {
-	int		rounded_size;
-	int		num_pages;
+	t_page_size		ps;
 
-	rounded_size = g_page_size;
-	num_pages = 1;
-	while (rounded_size < size && rounded_size && num_pages++)
-		rounded_size += g_page_size;
-	return ((rounded_size) ? rounded_size : -1);
+	ps.size = g_page_size;
+	ps.pages = 1;
+	while (ps.size < size && ps.size && ps.pages++)
+		ps.size += g_page_size;
+	if (!ps.size)
+		ps.pages = -1;
+	return (ps);
 }
 
 void	*allocate_page(void	*start_point, size_t size)
@@ -80,23 +81,31 @@ void	*allocate_page(void	*start_point, size_t size)
 	return (address);
 }
 
-char	malloc_zone(size_t size)
+char	malloc_zone(size_t size, t_block_zone **start_block)
 {
 	t_block_zone	*block;
+	t_page_size		page_size;
 
-	if (g_zones.tiny_block == NULL)
+	page_size = round_to_pagesize(size);
+	if (!page_size.pages)
+		return (0);
+	block = *start_block;
+	if (block)
 	{
-		g_zones.tiny_block = allocate_page(NULL, round_to_pagesize(g_page_size));
-		if (g_zones.tiny_block == NULL)
-			return (0);
+		while (block && block->next)
+			block = block->next;
+		block->next = allocate_page(NULL, page_size.size);//still need to account for increasiong the page size
+		if (!block->next)
+			return (-1);
+		block = block->next
 	}
 	else
 	{
-		block = g_zones.tiny_block;
-		while (block->next != NULL)
-			block = block->next;
-		//alocate
+		*start_block = allocate_page(NULL, page_size.size);//also needs to handle alternative case
+		if (!start_block)
+			return (-1);
 	}
+	block.ps = page_size;
 	return (1);
 }
 
