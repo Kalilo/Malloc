@@ -54,3 +54,4 @@ dkms.conf
 # Other
 .DS_Store
 ._*
+.nfs.*
