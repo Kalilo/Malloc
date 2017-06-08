@@ -17,6 +17,9 @@
 # define TINY_MAX 127
 # define SMALL_MAX 32768
 
+# define MAX_INT 2147483647
+# define MIN_INT -2147483648
+
 # define FATAL_ERROR_RETURN(x) if(x)return(-1)
 # define ERROR_RETURN(x) if(x)return(0)
 # define SUCCESS_RETURN(X) if(x)return(1)
@@ -55,7 +58,8 @@ typedef struct			s_malloc_zones
 t_malloc_zones			g_zones;
 int						g_page_size;
 
-void	init_memory(void) {
+void	init_memory(void)
+{
 	ft_bzero(&g_zones, sizeof(t_malloc_zones));
 	g_page_size = getpagesize();
 }
@@ -64,11 +68,9 @@ t_page_size	round_to_pagesize(int size)
 {
 	t_page_size		ps;
 
-	ps.size = g_page_size;
-	ps.pages = 1;
-	while (ps.size < size && ps.size && ps.pages++)
-		ps.size += g_page_size;
-	if (!ps.size)
+	ps.pages = (size / g_page_size) + 1;
+	ps.size = ps.pages * g_page_size;
+	if ((ps.pages * g_page_size) > MAX_INT)
 		ps.pages = -1;
 	return (ps);
 }
