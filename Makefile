@@ -6,7 +6,7 @@
 #    By: ggroener <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/09/28 11:16:22 by ggroener          #+#    #+#              #
-#    Updated: 2016/12/04 17:14:27 by smahomed         ###   ########.fr        #
+#    Updated: 2016/12/04 17:14:27 by khansman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,6 +121,14 @@ fnorme:
 	@$(call colourecho2, "Norminette:")
 	@find ./srcs -name "*.c" -maxdepth 1 -type f -exec norminette  {} \;
 	@find ./includes -name "*.h" -maxdepth 1 -type f -exec norminette  {} \;
+
+submodule:
+	@$(call colourecho, "Checking Submodules...")
+	@if [ ! -d libft/includes ]; then \
+		git submodule init libft; \
+		git submodule update; \
+	fi;
+	@$(call colourecho, "done checking submodules")
 
 qme:
 	@if [ ! -f author ]; then \
