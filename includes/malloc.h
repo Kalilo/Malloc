@@ -68,7 +68,7 @@
 /*
 ** Shorten
 */
-# define ALLOC_SIZE block->ps.size + block
+# define BLOCK_END block->ps.size + block
 
 /*
 ** ----------\
