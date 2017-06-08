@@ -20,8 +20,8 @@
 
 typedef struct			s_small_list
 {
-	char				used : 1;
-	char				next : 7;
+	unsigned short		used : 1;
+	unsigned short		next : 15;
 }						t_small_list;
 
 int		main() {

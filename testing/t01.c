@@ -10,13 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+# include "../libft/includes/libft.h"
+
 # define TINY_MAX 127
 # define SMALL_MAX 32768
 
+typedef struct			s_tiny_list
+{
+	unsigned char		used : 1;
+	unsigned char		next : 7;
+}						t_tiny_list;
+
 typedef struct			s_small_list
 {
-	char				used : 1;
-	char				next : 7;
+	unsigned short		used : 1;
+	unsigned short		next : 15;
 }						t_small_list;
 
 typedef struct			s_block_zone
@@ -27,11 +35,19 @@ typedef struct			s_block_zone
 
 typedef struct			s_malloc_zones
 {
-	void				*tiny_block;
-	void				*small_block;
-	void				*large_block;
+	t_block_zone		*tiny_block;
+	t_block_zone		*small_block;
+	t_block_zone		*large_block;
 }						t_malloc_zones;
 
-// char	init_memory(void) {
+t_malloc_zones			g_zones;
 
-// }
+void	init_memory(void) {
+	ft_bzero(&g_zones, sizeof(t_malloc_zones));
+}
+
+char	malloc_small_zone(size_t size)
+{
+	if (g_zones.small_block == NULL)
+
+}
