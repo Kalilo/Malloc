@@ -16,7 +16,7 @@ char	extend_zone(t_block_zone *block, t_page_size page_size)
 {
 	t_block_zone	*new_block;
 
-	if ((new_block = allocate_page(block->ps.size + block, page_size.size)) != NULL)
+	if ((new_block = allocate_page(ALLOC_SIZE, page_size.size)) != NULL)
 	{
 		block->ps.size += page_size.size;
 		block->ps.pages += page_size.pages;

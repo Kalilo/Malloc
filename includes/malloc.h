@@ -66,6 +66,11 @@
 # define MMAP_FFLAGS MAP_ANON|MAP_PRIVATE|MAP_FIXED
 
 /*
+** Shorten
+*/
+# define ALLOC_SIZE block->ps.size + block
+
+/*
 ** ----------\
 ** Structures |
 ** ----------/
