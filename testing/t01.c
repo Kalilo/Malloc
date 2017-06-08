@@ -124,9 +124,9 @@ char	malloc_zone(size_t size, t_block_zone **start_block)
 	{
 		*start_block = allocate_page(NULL, page_size.size);
 		FATAL_ERROR_RETURN(!start_block);
+		block->ps = page_size;
+		block->next = NULL;
 	}
-	block->ps = page_size;
-	block->next = NULL;
 	return (1);
 }
 
