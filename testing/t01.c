@@ -17,6 +17,9 @@
 # define TINY_MAX 127
 # define SMALL_MAX 32768
 
+# define FATAL_ERROR_RETURN(x) if(x)return(-1)
+# define ERROR_RETURN(x) if(x)return(0)
+
 typedef struct			s_tiny_list
 {
 	unsigned char		used : 1;
@@ -87,25 +90,23 @@ char	malloc_zone(size_t size, t_block_zone **start_block)
 	t_page_size		page_size;
 
 	page_size = round_to_pagesize(size);
-	if (!page_size.pages)
-		return (0);
+	ERROR_RETURN(!page_size.pages);
 	block = *start_block;
 	if (block)
 	{
 		while (block && block->next)
 			block = block->next;
 		block->next = allocate_page(NULL, page_size.size);//still need to account for increasiong the page size
-		if (!block->next)
-			return (-1);
-		block = block->next
+		FATAL_ERROR_RETURN(block->next);
+		block = block->next;
 	}
 	else
 	{
 		*start_block = allocate_page(NULL, page_size.size);//also needs to handle alternative case
-		if (!start_block)
-			return (-1);
+		FATAL_ERROR_RETURN(!start_block);
 	}
-	block.ps = page_size;
+	block->ps = page_size;
+	block->next = NULL;
 	return (1);
 }
 
