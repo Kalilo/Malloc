@@ -88,6 +88,13 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $< -I$(INCLUDES_PATH)
 	@$(call colourecho, "Compiling Done!")
 
+# From libft - need to complete, and use
+compile: qme objs_dir $(OBJS)
+	@$(call colourecho, "Compiling $(NAME)")
+	@ar -rc $(NAME) $(OBJS)
+	@ranlib $(NAME)
+	@$(call colourecho, "Done Compiling!")
+
 odir:
 	@mkdir -p $(OBJS_PATH)
 
