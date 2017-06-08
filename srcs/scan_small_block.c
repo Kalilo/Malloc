@@ -1,50 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scan_tiny_block.c                                  :+:      :+:    :+:   */
+/*   scan_small_block.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: khansman <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/08 16:29:23 by khansman          #+#    #+#             */
-/*   Updated: 2017/06/08 16:29:25 by khansman         ###   ########.fr       */
+/*   Created: 2017/06/08 16:57:37 by khansman          #+#    #+#             */
+/*   Updated: 2017/06/08 16:57:40 by khansman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-char	compatable_tiny_block(t_tiny_list *tiny, size_t size)
+char	compatable_small_block(t_small_list *small, size_t size)
 {
-	if (tiny->used)
+	if (small->used)
 		return (0);
-	if (tiny->next)
+	if (small->next)
 	{
-		if (tiny->next < size && size > tiny->next + TINY_TOLERANCE)
+		if (small->next < size && size > small->next + SMALL_TOLERANCE)
 			return (1);
 	}
 	else
 	{
-		tiny->next = size + 1;
-		tiny += tiny->next;
-		tiny->used = 0;
-		tiny->next = 0;
+		small->next = size + 1;
+		small += small->next;
+		small->used = 0;
+		small->next = 0;
 		return (1);
 	}
 	return (0);
 }
 
-void	*scan_tiny_block(t_block_zone *block, size_t size)
+void	*scan_small_block(t_block_zone *block, size_t size)
 {
-	t_tiny_list		*tiny;
+	t_small_list		*small;
 	size_t			distance;
 
 	distance = sizeof(t_block_zone) + size + 2;
-	tiny = (t_tiny_list *)(block + distance);
+	small = (t_small_list *)(block + distance);
 	while (distance < block->ps.size)
 	{
-		if (compatable_tiny_block(tiny, size))
-			return ((void *)(tiny + 1));
-		distance += tiny->next;
-		tiny += tiny->next;
+		if (compatable_small_block(small, size))
+			return ((void *)(small + 1));
+		distance += small->next;
+		small += small->next;
 	}
 	return (NULL);
 }

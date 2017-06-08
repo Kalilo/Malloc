@@ -50,7 +50,6 @@
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648
 
-
 /*
 ** Return Values
 */
@@ -64,6 +63,13 @@
 # define MMAP_PROT PROT_READ|PROT_WRITE
 # define MMAP_FLAGS MAP_ANON|MAP_PRIVATE
 # define MMAP_FFLAGS MAP_ANON|MAP_PRIVATE|MAP_FIXED
+
+/*
+** Tolerance
+*/
+# define TINY_TOLERANCE    8
+# define SMALL_TOLERANCE  16
+# define LARGE_TOLERANCE  32
 
 /*
 ** Shorten
