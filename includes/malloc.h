@@ -81,8 +81,8 @@
 */
 typedef struct			s_page_size
 {
-	int							pages;
-	int							size;
+	int					pages;
+	int					size;
 }						t_page_size;
 
 /*
