@@ -42,6 +42,12 @@ typedef struct			s_malloc_zones
 	t_block_zone		*large_block;
 }						t_malloc_zones;
 
+typedef struct			s_page_size
+{
+	int							pages;
+	int							size;
+}						t_page_size;
+
 t_malloc_zones			g_zones;
 int						g_page_size;
 
@@ -53,9 +59,11 @@ void	init_memory(void) {
 int		round_to_pagesize(int size)
 {
 	int		rounded_size;
+	int		num_pages;
 
 	rounded_size = g_page_size;
-	while (rounded_size < size && rounded_size)
+	num_pages = 1;
+	while (rounded_size < size && rounded_size && num_pages++)
 		rounded_size += g_page_size;
 	return ((rounded_size) ? rounded_size : -1);
 }
@@ -72,13 +80,13 @@ void	*allocate_page(void	*start_point, size_t size)
 	return (address);
 }
 
-char	malloc_tiny_zone(size_t size)
+char	malloc_zone(size_t size)
 {
 	t_block_zone	*block;
 
 	if (g_zones.tiny_block == NULL)
 	{
-		g_zones.tiny_block = allocate_page(NULL, g_page_size);//fix page size
+		g_zones.tiny_block = allocate_page(NULL, round_to_pagesize(g_page_size));
 		if (g_zones.tiny_block == NULL)
 			return (0);
 	}
