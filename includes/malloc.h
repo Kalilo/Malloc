@@ -19,15 +19,18 @@
 ** ----------/
 */
 
-# ifdef __APPLE__
-#  include <strings.h>
-# else
-#  include <string.h>
-# endif
+/*
+** # ifdef __APPLE__
+** #  include <strings.h>
+** # else
+** #  include <string.h>
+** # endif
+*/
 
 # include <sys/mman.h>
-# include <unistd.h>
+# include <sys/types.h>
 # include <sys/resource.h>
+# include <unistd.h>
 # include <pthread.h>
 
 /*
