@@ -50,6 +50,16 @@ void	init_memory(void) {
 	g_page_size = getpagesize();
 }
 
+int		round_to_pagesize(int size)
+{
+	int		rounded_size;
+
+	rounded_size = g_page_size;
+	while (rounded_size < size && rounded_size)
+		rounded_size += g_page_size;
+	return ((rounded_size) ? rounded_size : -1);
+}
+
 void	*allocate_page(void	*start_point, size_t size)
 {
 	void	*address;
