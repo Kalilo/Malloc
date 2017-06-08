@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+# include <sys/mman.h>
+
 # include "../libft/includes/libft.h"
 
 # define TINY_MAX 127
@@ -41,13 +43,41 @@ typedef struct			s_malloc_zones
 }						t_malloc_zones;
 
 t_malloc_zones			g_zones;
+int						g_page_size;
 
 void	init_memory(void) {
 	ft_bzero(&g_zones, sizeof(t_malloc_zones));
+	g_page_size = getpagesize();
 }
 
-char	malloc_small_zone(size_t size)
+void	*allocate_page(void	*start_point, size_t size)
 {
-	if (g_zones.small_block == NULL)
+	void	*address;
 
+	if (start_point == NULL)
+		address = mmap(0, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	else
+		address = mmap(start_point, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE |  MAP_FIXED, -1, 0);
+	
+	return (address);
 }
+
+char	malloc_tiny_zone(size_t size)
+{
+	t_block_zone	*block;
+
+	if (g_zones.tiny_block == NULL)
+		g_zones.tiny_block = allocate_page(NULL, g_page_size);
+	if (g_zones.tiny_block == NULL)
+		return (0);
+	return (1);
+}
+
+// char	malloc_small_zone(size_t size)
+// {
+// 	if (g_zones.small_block == NULL)
+// 		g_zones.small_block = allocate_page(NULL, 2 * g_page_size);
+// 	if (g_zones.small_block == NULL)
+// 		return (0);
+// 	return (1);
+// }
