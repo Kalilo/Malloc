@@ -159,4 +159,9 @@ void		*allocate_page(void	*start_point, size_t size);
 char		extend_zone(t_block_zone *block, t_page_size page_size);
 char		malloc_zone(size_t size, t_block_zone **start_block);
 
+/*
+**                                /----------\                                **
+** ----- ----- ----- ----- ----- |  The End   | ----- ----- ----- ----- ----- **
+**                                \----------/                                **
+*/
 #endif
