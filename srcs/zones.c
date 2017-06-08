@@ -29,6 +29,7 @@ char	extend_zone(t_block_zone *block, t_page_size page_size)
 		new_block = block->next;
 		new_block->next = NULL;
 		new_block->ps = page_size;
+		new_block->active_members = 0;
 		clear = (int *)(new_block + sizeof(t_block_zone) + 1);
 		*clear = 0;
 	}
@@ -57,6 +58,7 @@ char	malloc_zone(size_t size, t_block_zone **start_block)
 		FATAL_ERROR_RETURN(!*start_block);
 		block->ps = page_size;
 		block->next = NULL;
+		block->active_members = 0;
 		clear = (int *)(block + sizeof(t_block_zone) + 1);
 		*clear = 0;
 	}

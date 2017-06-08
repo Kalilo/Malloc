@@ -110,6 +110,7 @@ typedef struct			s_block_zone
 {
 	struct s_block_zone	*next;
 	t_page_size			ps;
+	int					active_members;
 }						t_block_zone;
 
 /*
@@ -163,6 +164,18 @@ void		init_memory(void);
 */
 t_page_size	round_to_pagesize(int size);
 void		*allocate_page(void	*start_point, size_t size);
+
+/*
+** scan_small_block.c
+*/
+char		compatable_small_block(t_small_list *small, size_t size);
+void		*scan_small_block(t_block_zone *block, size_t size);
+
+/*
+** scan_tiny_block.c
+*/
+char		compatable_tiny_block(t_tiny_list *tiny, size_t size);
+void		*scan_tiny_block(t_block_zone *block, size_t size);
 
 /*
 ** zones.c
