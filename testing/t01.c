@@ -19,6 +19,7 @@
 
 # define FATAL_ERROR_RETURN(x) if(x)return(-1)
 # define ERROR_RETURN(x) if(x)return(0)
+# define SUCCESS_RETURN(X) if(x)return(1)
 
 typedef struct			s_tiny_list
 {
@@ -84,6 +85,26 @@ void	*allocate_page(void	*start_point, size_t size)
 	return (address);
 }
 
+char	extend_zone(t_block_zone *block, t_page_size page_size)
+{
+	t_block_zone	*new_block;
+
+	if ((new_block = allocate_page(block->ps.size + block, page_size.size)) != NULL)
+	{
+		block->ps.size += page_size.size;
+		block->ps.pages += page_size.pages;
+	}
+	else
+	{
+		block->next = allocate_page(NULL, page_size.size);
+		FATAL_ERROR_RETURN(block->next == NULL);
+		new_block = block->next;
+		new_block->next = NULL;
+		new_block->ps = page_size;
+	}
+	return (1);
+}
+
 char	malloc_zone(size_t size, t_block_zone **start_block)
 {
 	t_block_zone	*block;
@@ -96,13 +117,12 @@ char	malloc_zone(size_t size, t_block_zone **start_block)
 	{
 		while (block && block->next)
 			block = block->next;
-		block->next = allocate_page(NULL, page_size.size);//still need to account for increasiong the page size
-		FATAL_ERROR_RETURN(block->next);
+		FATAL_ERROR_RETURN(!extend_zone(block, page_size));
 		block = block->next;
 	}
 	else
 	{
-		*start_block = allocate_page(NULL, page_size.size);//also needs to handle alternative case
+		*start_block = allocate_page(NULL, page_size.size);
 		FATAL_ERROR_RETURN(!start_block);
 	}
 	block->ps = page_size;
