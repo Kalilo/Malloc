@@ -59,6 +59,13 @@
 # define SUCCESS_RETURN(X) if(x)return(1)
 
 /*
+** Flags
+*/
+# define MMAP_PROT PROT_READ|PROT_WRITE
+# define MMAP_FLAGS MAP_ANON|MAP_PRIVATE
+# define MMAP_FFLAGS MAP_ANON|MAP_PRIVATE|MAP_FIXED
+
+/*
 ** ----------\
 ** Structures |
 ** ----------/

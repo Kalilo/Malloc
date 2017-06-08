@@ -28,9 +28,9 @@ void	*allocate_page(void	*start_point, size_t size)
 	void	*address;
 
 	if (start_point == NULL)
-		address = mmap(0, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+		address = mmap(0, size, MMAP_PROT, MMAP_FLAGS, -1, 0);
 	else
-		address = mmap(start_point, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE |  MAP_FIXED, -1, 0);
+		address = mmap(start_point, size, MMAP_PROT, MMAP_FFLAGS, -1, 0);
 	
 	return (address);
 }
