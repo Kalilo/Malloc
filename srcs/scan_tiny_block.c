@@ -23,7 +23,7 @@ char	compatable_tiny_block(t_tiny_list *tiny, size_t size)
 	}
 	else
 	{
-		tiny->next = size + 1;
+		tiny->next = size + 2;
 		tiny += tiny->next;
 		tiny->used = 0;
 		tiny->next = 0;
