@@ -85,6 +85,7 @@ void	free_all_blocks(void)
 	block = g_zones.large_block;
 	while (block && munmap(block, block->ps.size) + 1)
 		block = block->next;
+	ft_bzero(&g_zones, sizeof(t_malloc_zones));
 }
 
 void	free(void *ptr)
