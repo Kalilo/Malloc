@@ -12,7 +12,7 @@
 
 #include "../includes/malloc.h"
 
-char	increase_large_block(t_block_zone *block, size_t size, t_page_size ps)
+char	resize_large_block(t_block_zone *block, size_t size, t_page_size ps)
 {
 	t_block_zone	*parent_block;
 	t_block_zone	*new_block;
@@ -33,7 +33,7 @@ char	increase_large_block(t_block_zone *block, size_t size, t_page_size ps)
 		parent_block->next = new_block;
 		munmap(block, block->ps.size);
 	}
-	return (0);
+	return (1);
 }
 
 char	realloc_large_block(t_block_zone *block, size_t size)
@@ -42,14 +42,5 @@ char	realloc_large_block(t_block_zone *block, size_t size)
 
 	ps = round_to_pagesize(size + sizeof(t_block_zone));
 	SUCCESS_RETURN(ps.pages == block->ps.pages);
-	if (ps.pages > block->ps.pages)
-	{
-		if (allocate_page(block, ps.size))
-		{
-			block->ps = ps;
-			return (1);
-		}
-	}
-	else
-	return (0);
+	return (resize_large_block(block, size, ps));
 }
