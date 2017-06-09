@@ -14,7 +14,7 @@
 
 void	malloc_error_quit(char *error_message)
 {
-	ft_putstr("ERROR: ");
+	ft_putstr("MALLOC ERROR: ");
 	ft_putendl(error_message);
 	exit(0);
 }
