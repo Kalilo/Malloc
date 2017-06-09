@@ -22,20 +22,19 @@ INCLUDES_PATH = includes/
 
 SRCS_PATH = srcs/
 
-SRCS_NAME = algo.c							\
-			find_values.c					\
+SRCS_NAME = error_quit.c					\
+			find_block.c					\
 			free.c							\
-			ft_bzero.c						\
-			ft_memcpy.c						\
-			ft_strcmp.c						\
-			ft_strnew.c						\
-			getnextline.c					\
-			main.c							\
 			init.c							\
-			links.c							\
-			putstr.c						\
-			read_input.c					\
-			store_link.c					\
+			malloc.c						\
+			pages.c							\
+			realloc.c						\
+			realloc_large_block.c			\
+			realloc_small_block.c			\
+			realloc_tiny_block.c			\
+			scan_small_block.c				\
+			scan_tiny_block.c				\
+			zones.c							\
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))
 
@@ -55,8 +54,7 @@ INCLUDES = -I includes/
  
 #INCLUDES = -I includes/ -I libft/includes -I /usr/X11/include
 
-HEADER = 	$(INCLUDES_PATH)hotrace.h		\
-			$(INCLUDES_PATH)getnextline.h	\
+HEADER = 	$(INCLUDES_PATH)malloc.h		\
 
 all: qme odir $(NAME)
 
