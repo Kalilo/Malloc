@@ -10,11 +10,11 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = malloc.a
+NAME = malloc.so
 
-CFLAGS =	-Wall -Wextra -Werror -O3
+CFLAGS =	-Wall -Wextra -Werror -fPIC -O3
 
-CFLAGS2 =	-Wall -Wextra -Werror -O3
+CFLAGS2 =	-shared -Wall -Wextra -Werror -fPIC -O3
 
 CC = gcc
 
