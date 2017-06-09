@@ -11,3 +11,8 @@
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
+
+char	realloc_large_block(t_block_zone *block, size_t size)
+{
+	//
+}
