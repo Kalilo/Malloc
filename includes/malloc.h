@@ -55,7 +55,7 @@
 */
 # define FATAL_ERROR_RETURN(x) if(x)return(-1)
 # define ERROR_RETURN(x) if(x)return(0)
-# define SUCCESS_RETURN(X) if(x)return(1)
+# define SUCCESS_RETURN(x) if(x)return(1)
 
 /*
 ** Flags

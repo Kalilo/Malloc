@@ -19,8 +19,10 @@ char	realloc_tiny_block(void *ptr, size_t size)
 	tiny = (t_tiny_list *)(ptr - 1);
 	if (size < (size_t)tiny->next && size < TINY_MAX)
 	{
-		// SUCCESS_RETURN();
+		SUCCESS_RETURN(size > tiny->next + TINY_TOLERANCE);
+		// Case handle dividing a block
 	}
+	// Case handle merging blocks
 	return (0);
 }
 
