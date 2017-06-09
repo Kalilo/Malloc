@@ -17,10 +17,11 @@ char	realloc_tiny_block(void *ptr, size_t size)
 	t_tiny_list		*tiny;
 
 	tiny = (t_tiny_list *)(ptr - 1);
-	if (size < (size_t)tiny->next)
+	if (size < (size_t)tiny->next && size < TINY_MAX)
 	{
-		//
+		// SUCCESS_RETURN();
 	}
+	return (0);
 }
 
 void	*realloc(void *ptr, size_t size)
