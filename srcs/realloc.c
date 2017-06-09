@@ -16,6 +16,7 @@ void	*realloc(void *ptr, size_t size)
 {
 	t_block_data	block_data;
 
+	init_memory();
 	block_data = find_block(ptr);
 	if (block_data.block_type == TINY_BLOCK && size <= TINY_MAX &&
 			realloc_tiny_block(ptr, size))

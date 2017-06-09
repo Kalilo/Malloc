@@ -68,6 +68,7 @@ void		*malloc_large_block(size_t size)
 
 void		*malloc(size_t size)
 {
+	init_memory();
 	if (size < TINY_MAX)
 		return (malloc_tiny_block(size));
 	if (size < SMALL_MAX)

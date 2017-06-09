@@ -91,6 +91,7 @@ void	free(void *ptr)
 {
 	t_block_data	block_data;
 
+	init_memory();
 	if (ptr == NULL)
 	{
 		free_all_blocks();
