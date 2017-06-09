@@ -25,7 +25,7 @@ char	compatable_small_block(t_small_list *small, size_t size)
 	{
 		small->next = size + 2;
 		small += small->next;
-		small->used = 0;
+		small->used = 1;
 		small->next = 0;
 		return (1);
 	}

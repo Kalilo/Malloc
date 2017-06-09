@@ -39,7 +39,7 @@ void		*malloc_small_block(size_t size)
 	void			*zone;
 
 	block = g_zones.small_block;
-	while (block && block->next)
+	while (block)
 	{
 		if ((zone = scan_small_block) != NULL && ++block->active_members)
 			return (zone);
