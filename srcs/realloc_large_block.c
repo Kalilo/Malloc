@@ -12,7 +12,7 @@
 
 #include "../includes/malloc.h"
 
-char	resize_large_block(t_block_zone *block, size_t size, t_page_size ps)
+char	resize_large_block(t_block_zone *block, t_page_size ps)
 {
 	if (allocate_page(block, ps.size))
 	{
@@ -29,7 +29,7 @@ void	*realloc_large_block(t_block_zone *block, size_t size)
 	t_block_zone	*new_block;
 
 	ps = round_to_pagesize(size + sizeof(t_block_zone));
-	if (ps.pages == block->ps.pages || resize_large_block(block, size, ps))
+	if (ps.pages == block->ps.pages || resize_large_block(block, ps))
 		return (block);
 	parent_block = g_zones.large_block;
 	while (parent_block->next && parent_block->next != block)

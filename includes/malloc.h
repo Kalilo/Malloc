@@ -180,7 +180,7 @@ t_block_data	find_block(void *ptr);
 */
 void			free_tiny_block(t_block_zone *block, void *ptr);
 void			free_small_block(t_block_zone *block, void *ptr);
-void			free_large_block(t_block_zone *block, void *ptr);
+void			free_large_block(t_block_zone *block);
 void			free_all_blocks(void);
 void			free(void *ptr);
 
@@ -206,8 +206,7 @@ void			*allocate_page(void	*start_point, size_t size);
 /*
 ** realloc_large_block.c
 */
-char			resize_large_block(t_block_zone *block, size_t size,
-				t_page_size ps);
+char			resize_large_block(t_block_zone *block, t_page_size ps);
 void			*realloc_large_block(t_block_zone *block, size_t size);
 
 /*

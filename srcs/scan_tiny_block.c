@@ -39,7 +39,7 @@ void	*scan_tiny_block(t_block_zone *block, size_t size)
 
 	distance = sizeof(t_block_zone) + size + 2;
 	tiny = (t_tiny_list *)(block + distance);
-	while (distance < block->ps.size)
+	while (distance < (size_t)block->ps.size)
 	{
 		if (compatable_tiny_block(tiny, size))
 			return ((void *)(tiny + 1));

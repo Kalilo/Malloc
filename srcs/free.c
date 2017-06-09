@@ -58,7 +58,7 @@ void	free_small_block(t_block_zone *block, void *ptr)
 	}
 }
 
-void	free_large_block(t_block_zone *block, void *ptr)
+void	free_large_block(t_block_zone *block)
 {
 	t_block_zone	*parent_block;
 
@@ -102,7 +102,7 @@ void	free(void *ptr)
 	else if (block_data.block_type == SMALL_BLOCK)
 		free_small_block(block_data.block, ptr);
 	else if (block_data.block_type == LARGE_BLOCK)
-		free_large_block(block_data.block, ptr);
+		free_large_block(block_data.block);
 	else
 		malloc_error_quit("Attempting to free unallocated regin");
 }
