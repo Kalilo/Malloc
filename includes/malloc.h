@@ -229,6 +229,12 @@ char			extend_zone(t_block_zone *block, t_page_size page_size);
 char			malloc_zone(size_t size, t_block_zone **start_block);
 
 /*
+** Bonus Summary:
+** -> free_all_blocks
+** -> double free error handling
+*/
+
+/*
 **                                /----------\                                **
 ** ----- ----- ----- ----- ----- |  The End   | ----- ----- ----- ----- ----- **
 **                                \----------/                                **
