@@ -38,28 +38,26 @@ char	extend_zone(t_block_zone *block, t_page_size page_size)
 
 char	malloc_zone(size_t size, t_block_zone **start_block)
 {
-	t_block_zone	*block;
 	int				*clear;
 	t_page_size		page_size;
 
 	page_size = round_to_pagesize(size);
 	ERROR_RETURN(!page_size.pages);
-	block = *start_block;
-	if (block)
+	if (*start_block)
 	{
-		while (block && block->next)
-			block = block->next;
-		FATAL_ERROR_RETURN(!extend_zone(block, page_size));
-		block = block->next;
+		while (*start_block && (*start_block)->next)
+			*start_block = (*start_block)->next;
+		FATAL_ERROR_RETURN(!extend_zone(*start_block, page_size));
+		*start_block = (*start_block)->next;
 	}
 	else
 	{
 		*start_block = allocate_page(NULL, page_size.size);
 		FATAL_ERROR_RETURN(!*start_block);
-		block->ps = page_size;
-		block->next = NULL;
-		block->active_members = 0;
-		clear = (int *)(block + sizeof(t_block_zone) + 1);
+		(*start_block)->ps = page_size;
+		(*start_block)->next = NULL;
+		(*start_block)->active_members = 0;
+		clear = (int *)((*start_block) + sizeof(t_block_zone) + 1);
 		*clear = 0;
 	}
 	return (1);

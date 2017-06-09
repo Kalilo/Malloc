@@ -31,6 +31,5 @@ void	*allocate_page(void	*start_point, size_t size)
 		address = mmap(0, size, MMAP_PROT, MMAP_FLAGS, -1, 0);
 	else
 		address = mmap(start_point, size, MMAP_PROT, MMAP_FFLAGS, -1, 0);
-	
 	return (address);
 }
