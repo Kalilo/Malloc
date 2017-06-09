@@ -74,13 +74,28 @@ void	free_large_block(t_block_zone *block, void *ptr)
 
 void	free_all_blocks(void)
 {
-	// t_block_zone	*block;
+	t_block_zone	*block;
+
+	block = g_zones.tiny_block;
+	while (block && munmap(block, block->ps.size) + 1)
+		block = block->next;
+	block = g_zones.small_block;
+	while (block && munmap(block, block->ps.size) + 1)
+		block = block->next;
+	block = g_zones.large_block;
+	while (block && munmap(block, block->ps.size) + 1)
+		block = block->next;
 }
 
 void	free(void *ptr)
 {
 	t_block_data	block_data;
 
+	if (ptr == NULL)
+	{
+		free_all_blocks();
+		return ;
+	}
 	block_data = find_block(ptr);
 	if (block_data.block_type == TINY_BLOCK)
 		free_tiny_block(block_data.block, ptr);
@@ -90,6 +105,4 @@ void	free(void *ptr)
 		free_large_block(block_data.block, ptr);
 	else
 		malloc_error_quit("Attempting to free unallocated regin");
-	// else error quit, double free error.
-	// find matching block, then set used to false, afterwards free it it.
 }

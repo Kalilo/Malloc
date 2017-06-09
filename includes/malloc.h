@@ -164,7 +164,7 @@ extern int				g_page_size;
 /*
 ** Todo
 */
-void			free(void *ptr);
+// void			free(void *ptr);
 // void			*malloc(size_t size);
 void			*realloc(void *ptr, size_t size);
 
@@ -185,6 +185,11 @@ t_block_data	find_block(void *ptr);
 /*
 ** free.c
 */
+void			free_tiny_block(t_block_zone *block, void *ptr);
+void			free_small_block(t_block_zone *block, void *ptr);
+void			free_large_block(t_block_zone *block, void *ptr);
+void			free_all_blocks(void);
+void			free(void *ptr);
 
 /*
 ** init.c
