@@ -14,7 +14,7 @@ NAME = malloc.so
 
 CFLAGS =	-Wall -Wextra -Werror -fPIC -O3
 
-CFLAGS2 =	-shared -Wall -Wextra -Werror -fPIC -O3
+CFLAGS2 =	-shared -Wall -Wextra -Werror -O3
 
 CC = gcc
 
