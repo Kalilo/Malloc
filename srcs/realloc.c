@@ -16,8 +16,15 @@ void	*realloc(void *ptr, size_t size)
 {
 	t_block_data	block_data;
 
-	// find block, attempt to resize or malloc new block
 	block_data = find_block(ptr);
-	//
-	return (NULL);
+	if (block_data.block_type == TINY_BLOCK && size <= TINY_MAX &&
+			realloc_tiny_block(ptr, size))
+		return (ptr);
+	if (block_data.block_type == SMALL_BLOCK && size <= SMALL_MAX &&
+			realloc_small_block(ptr, size))
+		return (ptr);
+	if (block_data.block_type == LARGE_BLOCK)
+		return (realloc_large_block(ptr, size));
+	free(ptr);
+	return (malloc(size));
 }
