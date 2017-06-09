@@ -21,7 +21,7 @@ void		*malloc_tiny_block(size_t size)
 	block = g_zones.tiny_block;
 	while (block && block->next)
 	{
-		if ((zone = scan_tiny_block) != NULL && block->active_members++)
+		if ((zone = scan_tiny_block) != NULL && ++block->active_members)
 			return (zone);
 		block = block->next;
 	}
@@ -29,7 +29,7 @@ void		*malloc_tiny_block(size_t size)
 		!(block = g_zones.tiny_block));
 	if (block->next)
 		block = block->next;
-	if ((zone = scan_tiny_block) != NULL && block->active_members++)
+	if ((zone = scan_tiny_block) != NULL && ++block->active_members)
 		return (zone);
 	return (NULL);
 }
@@ -42,7 +42,7 @@ void		*malloc_small_block(size_t size)
 	block = g_zones.small_block;
 	while (block && block->next)
 	{
-		if ((zone = scan_small_block) != NULL && block->active_members++)
+		if ((zone = scan_small_block) != NULL && ++block->active_members)
 			return (zone);
 		block = block->next;
 	}
@@ -50,7 +50,7 @@ void		*malloc_small_block(size_t size)
 		!(block = g_zones.small_block));
 	if (block->next)
 		block = block->next;
-	if ((zone = scan_small_block) != NULL && block->active_members++)
+	if ((zone = scan_small_block) != NULL && ++block->active_members)
 		return (zone);
 	return (NULL);
 }
