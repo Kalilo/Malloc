@@ -72,6 +72,14 @@
 # define LARGE_TOLERANCE  32
 
 /*
+** Types
+*/
+# define NO_BLOCK        0
+# define TINY_BLOCK      1
+# define SMALL_BLOCK     2
+# define LARGE_BLOCK     3
+
+/*
 ** Shorten
 */
 # define BLOCK_END block->ps.size + block
@@ -123,6 +131,12 @@ typedef struct			s_malloc_zones
 	t_block_zone		*large_block;
 }						t_malloc_zones;
 
+typedef struct			s_block_data
+{
+	char				block_type;
+	t_block_zone		*block;
+}						t_block_data;
+
 /*
 ** ----------\
 ** Globals    |
@@ -134,7 +148,7 @@ typedef struct			s_malloc_zones
 t_malloc_zones			g_zones;
 int						g_page_size;
 
-else
+# else
 
 extern t_malloc_zones	g_zones;
 extern int				g_page_size;
@@ -150,38 +164,64 @@ extern int				g_page_size;
 /*
 ** Todo
 */
-void		free(void *ptr);
-void		*malloc(size_t size);
-void		*realloc(void *ptr, size_t size);
+void			free(void *ptr);
+// void			*malloc(size_t size);
+void			*realloc(void *ptr, size_t size);
+
+/*
+** erorr_quit.c
+*/
+void			malloc_error_quit(char *error_message);
+
+/*
+** find_block.c
+*/
+char			is_in_block(t_block_zone *block, void *ptr);
+t_block_data	find_in_tiny_block(void *ptr);
+t_block_data	find_in_small_block(void *ptr);
+t_block_data	find_in_large_block(void *ptr);
+t_block_data	find_block(void *ptr);
+
+/*
+** free.c
+*/
 
 /*
 ** init.c
 */
-void		init_memory(void);
+void			init_memory(void);
+
+/*
+** malloc.c
+*/
+void			*malloc_tiny_block(size_t size);
+void			*malloc_small_block(size_t size);
+void			*malloc_large_block(size_t size);
+void			*malloc(size_t size);
 
 /*
 ** pages.c
 */
-t_page_size	round_to_pagesize(int size);
-void		*allocate_page(void	*start_point, size_t size);
+t_page_size		round_to_pagesize(int size);
+void			*allocate_page(void	*start_point, size_t size);
 
 /*
 ** scan_small_block.c
 */
-char		compatable_small_block(t_small_list *small, size_t size);
-void		*scan_small_block(t_block_zone *block, size_t size);
+char			compatable_small_block(t_small_list *small, size_t size);
+void			*scan_small_block(t_block_zone *block, size_t size);
 
 /*
 ** scan_tiny_block.c
 */
-char		compatable_tiny_block(t_tiny_list *tiny, size_t size);
-void		*scan_tiny_block(t_block_zone *block, size_t size);
+char			compatable_tiny_block(t_tiny_list *tiny, size_t size);
+void			*scan_tiny_block(t_block_zone *block, size_t size);
 
 /*
 ** zones.c
 */
-char		extend_zone(t_block_zone *block, t_page_size page_size);
-char		malloc_zone(size_t size, t_block_zone **start_block);
+char			extend_zone(t_block_zone *block, t_page_size page_size);
+char			malloc_zone(size_t size, t_block_zone **start_block);
 
 /*
 **                                /----------\                                **
