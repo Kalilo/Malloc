@@ -211,6 +211,27 @@ t_page_size		round_to_pagesize(int size);
 void			*allocate_page(void	*start_point, size_t size);
 
 /*
+** realloc_large_block.c
+*/
+char			resize_large_block(t_block_zone *block, size_t size,
+				t_page_size ps);
+void			*realloc_large_block(t_block_zone *block, size_t size);
+
+/*
+** realloc_small_block.c
+*/
+char			divide_small_block(t_small_list *small, size_t size);
+char			merge_small_block(t_small_list *small);
+char			realloc_small_block(void *ptr, size_t size);
+
+/*
+** realloc_tiny_block.c
+*/
+char			divide_tiny_block(t_tiny_list *tiny, size_t size);
+char			merge_tiny_block(t_tiny_list *tiny);
+char			realloc_tiny_block(void *ptr, size_t size);
+
+/*
 ** scan_small_block.c
 */
 char			compatable_small_block(t_small_list *small, size_t size);
