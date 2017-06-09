@@ -162,13 +162,6 @@ extern int				g_page_size;
 */
 
 /*
-** Todo
-*/
-// void			free(void *ptr);
-// void			*malloc(size_t size);
-void			*realloc(void *ptr, size_t size);
-
-/*
 ** erorr_quit.c
 */
 void			malloc_error_quit(char *error_message);
