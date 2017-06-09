@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = hotrace
+NAME = malloc.a
 
 CFLAGS =	-Wall -Wextra -Werror -O3
 
@@ -45,9 +45,9 @@ OBJS_NAME = $(SRCS_NAME:.c=.o)
 OBJS = $(addprefix $(OBJS_PATH), $(OBJS_NAME))
 
 #uncomment these to work on Mac and comment to work on Linux.
-LIBRARY = 
+LIBRARY = -L libft/ -lft
 
-INCLUDES = -I includes/
+INCLUDES = -I includes/ -I libft/includes
 
 #uncomment these to work on Linux and comment to work on Mac.
 #LIBRARY = -L /usr/X11/lib -lmlx -lX11 -lm -lXext -L libft/ -lft
@@ -58,9 +58,9 @@ HEADER = 	$(INCLUDES_PATH)malloc.h		\
 
 all: qme odir $(NAME)
 
-ifeq ($(HOSTTYPE),)
-	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
-endif
+# ifeq ($(HOSTTYPE),)
+# 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+# endif
 
 define colourecho
 	@tput setaf 14
@@ -75,11 +75,8 @@ define colourecho2
 endef
 
 $(NAME): $(OBJS)
-	@$(call colourecho, " - Making $(NAME)")
-	@clear
-	@$(CC) $(CFLAGS2) -o $(NAME) $^ $(LIBRARY) $(INCLUDES) -I$(INCLUDES_PATH)
-	@clear
-	@$(call colourecho, "Make Done!")
+	@Make -C libft
+	@Make compile
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@$(call colourecho, " - Compiling $<")
@@ -87,7 +84,7 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@$(call colourecho, "Compiling Done!")
 
 # From libft - need to complete, and use # TODO
-compile: qme objs_dir $(OBJS)
+compile: qme odir $(OBJS)
 	@$(call colourecho, "Compiling $(NAME)")
 	@ar -rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
@@ -97,11 +94,13 @@ odir:
 	@mkdir -p $(OBJS_PATH)
 
 clean:
+	@Make clean -C libft
 	@$(call colourecho, " - Clearing object files")
 	@rm -f $(OBJS)
 	@$(call colourecho, "clean done!")
 
 fclean: clean
+	@Make fclean -C libft
 	@$(call colourecho, "Clearing executable files")
 	@rm -f $(NAME)
 	@$(call colourecho, "fclean done")
