@@ -247,6 +247,7 @@ char			malloc_zone(size_t size, t_block_zone **start_block);
 ** Bonus Summary:
 ** -> free_all_blocks
 ** -> double free error handling
+** -> defragor needs to be added
 */
 
 /*
