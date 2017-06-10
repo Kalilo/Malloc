@@ -30,4 +30,6 @@ int	main()
 		free(test01[k]);
 	}
 	printf("\tSucess!\n");
+
+	free(NULL);
 }
