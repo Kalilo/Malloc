@@ -70,6 +70,11 @@ void	free_large_block(t_block_zone *block)
 		parent_block->next = block->next;
 		munmap(block, block->ps.size);
 	}
+	else if (g_zones.large_block == block)
+	{
+		munmap(block, block->ps.size);
+		g_zones.large_block = NULL;
+	}
 }
 
 void	free_all_blocks(void)
