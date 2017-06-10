@@ -23,7 +23,7 @@ void		*malloc_tiny_block(size_t size)
 	parent_block = block;
 	while (block)
 	{
-		if ((zone = scan_tiny_block) != NULL && ++block->active_members)
+		if ((zone = scan_tiny_block(block, size)) != NULL && ++block->active_members)
 			return (zone);
 		parent_block = block;
 		block = block->next;
@@ -33,7 +33,7 @@ void		*malloc_tiny_block(size_t size)
 		g_zones.tiny_block = block;
 	else
 		parent_block->next = block;
-	if ((zone = scan_tiny_block) != NULL && ++block->active_members)
+	if ((zone = scan_tiny_block(block, size)) != NULL && ++block->active_members)
 		return (zone);
 	return (NULL);
 }
@@ -48,7 +48,7 @@ void		*malloc_small_block(size_t size)
 	parent_block = block;
 	while (block)
 	{
-		if ((zone = scan_small_block) != NULL && ++block->active_members)
+		if ((zone = scan_small_block(block, size)) != NULL && ++block->active_members)
 			return (zone);
 		parent_block = block;
 		block = block->next;
@@ -58,7 +58,7 @@ void		*malloc_small_block(size_t size)
 		g_zones.small_block = block;
 	else
 		parent_block->next = block;
-	if ((zone = scan_small_block) != NULL && ++block->active_members)
+	if ((zone = scan_small_block(block, size)) != NULL && ++block->active_members)
 		return (zone);
 	return (NULL);
 }
