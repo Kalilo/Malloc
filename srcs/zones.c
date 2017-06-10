@@ -48,7 +48,8 @@ char	malloc_zone(size_t size, t_block_zone **start_block)
 		while (*start_block && (*start_block)->next)
 			*start_block = (*start_block)->next;
 		FATAL_ERROR_RETURN(!extend_zone(*start_block, page_size));
-		*start_block = (*start_block)->next;
+		if (*start_block && (*start_block)->next)
+			*start_block = (*start_block)->next;
 	}
 	else
 	{
