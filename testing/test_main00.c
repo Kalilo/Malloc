@@ -15,10 +15,13 @@
 
 int	main()
 {
+	/* Test 00 */
 	printf("Attempting To malloc, and free 12 bytes:\n");
 	void	*test00 = malloc(12);
 	free(test00);
 	printf("\tSucess!\n");
+
+	/* Test 01 */
 	printf("Attempting To malloc, and free 10 * 32 bytes:\n");
 	void	*test01[10];
 	for (int k = 0; k < 10; k++) {
@@ -28,6 +31,25 @@ int	main()
 	for (int k = 0; k < 10; k++) {
 		printf("freeing test01[%d]: %p\n", k, test01[k]);
 		free(test01[k]);
+	}
+	printf("\tSucess!\n");
+
+	/* Test 02 */
+	printf("Attempting To malloc, and free 255 bytes:\n");
+	void	*test02 = malloc(255);
+	free(test02);
+	printf("\tSucess!\n");
+
+	/* Test 03 */
+	printf("Attempting To malloc, and free 10 * 1024 bytes:\n");
+	void	*test03[10];
+	for (int k = 0; k < 10; k++) {
+		test03[k] = malloc(1024);
+		printf("allocated test01[%d]: %p\n", k, test03[k]);
+	}
+	for (int k = 0; k < 10; k++) {
+		printf("freeing test01[%d]: %p\n", k, test03[k]);
+		free(test03[k]);
 	}
 	printf("\tSucess!\n");
 

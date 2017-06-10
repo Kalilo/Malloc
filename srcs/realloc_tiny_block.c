@@ -16,11 +16,11 @@ char	divide_tiny_block(t_tiny_list *tiny, size_t size)
 {
 	t_tiny_list		*new_tiny;
 
-	ERROR_RETURN(size > tiny->next + 1 + TINY_TOLERANCE);
-	new_tiny = (tiny + size) + 1;
+	ERROR_RETURN(size > tiny->next + sizeof(t_tiny_list) + TINY_TOLERANCE);
+	new_tiny = (tiny + size) + sizeof(t_tiny_list);
 	new_tiny->used = 0;
-	new_tiny->next = tiny->next - (size + 1);
-	tiny->next = size + 1;
+	new_tiny->next = tiny->next - (size + sizeof(t_tiny_list));
+	tiny->next = size + sizeof(t_tiny_list);
 	return (1);
 }
 
@@ -28,10 +28,10 @@ char	merge_tiny_block(t_tiny_list *tiny)
 {
 	t_tiny_list		*old_tiny;
 
-	old_tiny = tiny + tiny->next + 1;
-	ERROR_RETURN(tiny->next + old_tiny->next + 1 > TINY_MAX ||
-		old_tiny->used);
-	tiny->next += old_tiny->next + 1;
+	old_tiny = tiny + tiny->next + sizeof(t_tiny_list);
+	ERROR_RETURN(tiny->next + old_tiny->next + sizeof(t_tiny_list) >
+		TINY_MAX || old_tiny->used);
+	tiny->next += old_tiny->next + sizeof(t_tiny_list);
 	return (1);
 }
 
@@ -43,7 +43,7 @@ char	realloc_tiny_block(void *ptr, size_t size)
 {
 	t_tiny_list		*tiny;
 
-	tiny = (t_tiny_list *)(ptr - 1);
+	tiny = (t_tiny_list *)(ptr - sizeof(t_tiny_list));
 	if (size < (size_t)tiny->next && size < TINY_MAX)
 	{
 		SUCCESS_RETURN(size > tiny->next + TINY_TOLERANCE);

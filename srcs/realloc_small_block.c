@@ -16,11 +16,11 @@ char	divide_small_block(t_small_list *small, size_t size)
 {
 	t_small_list		*new_small;
 
-	ERROR_RETURN(size > small->next + 2 + SMALL_TOLERANCE);
-	new_small = (small + size) + 2;
+	ERROR_RETURN(size > small->next + sizeof(t_small_list) + SMALL_TOLERANCE);
+	new_small = (small + size) + sizeof(t_small_list);
 	new_small->used = 0;
-	new_small->next = small->next - (size + 2);
-	small->next = size + 2;
+	new_small->next = small->next - (size + sizeof(t_small_list));
+	small->next = size + sizeof(t_small_list);
 	return (1);
 }
 
@@ -28,10 +28,10 @@ char	merge_small_block(t_small_list *small)
 {
 	t_small_list		*old_small;
 
-	old_small = small + small->next + 2;
-	ERROR_RETURN(small->next + old_small->next + 2 > SMALL_MAX ||
-		old_small->used);
-	small->next += old_small->next + 2;
+	old_small = small + small->next + sizeof(t_small_list);
+	ERROR_RETURN(small->next + old_small->next +
+		sizeof(t_small_list) > SMALL_MAX || old_small->used);
+	small->next += old_small->next + sizeof(t_small_list);
 	return (1);
 }
 
@@ -43,7 +43,7 @@ char	realloc_small_block(void *ptr, size_t size)
 {
 	t_small_list		*small;
 
-	small = (t_small_list *)(ptr - 2);
+	small = (t_small_list *)(ptr - sizeof(t_small_list));
 	if (size < (size_t)small->next && size < SMALL_MAX)
 	{
 		SUCCESS_RETURN(size > small->next + SMALL_TOLERANCE);
