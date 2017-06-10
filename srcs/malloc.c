@@ -21,7 +21,6 @@ void		*malloc_tiny_block(size_t size)
 
 	block = g_zones.tiny_block;
 	parent_block = block;
-	
 	while (block)
 	{
 		if ((zone = scan_tiny_block) != NULL && ++block->active_members)
@@ -47,7 +46,6 @@ void		*malloc_small_block(size_t size)
 
 	block = g_zones.small_block;
 	parent_block = block;
-	
 	while (block)
 	{
 		if ((zone = scan_small_block) != NULL && ++block->active_members)
