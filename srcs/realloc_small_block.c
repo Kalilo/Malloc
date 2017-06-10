@@ -36,7 +36,7 @@ char	merge_small_block(t_small_list *small)
 }
 
 /*
-** Doesn't include error halding for page overflow
+** Doesn't include error hanlding for page overflow
 */
 
 char	realloc_small_block(void *ptr, size_t size)

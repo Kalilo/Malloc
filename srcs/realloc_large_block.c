@@ -12,6 +12,11 @@
 
 #include "../includes/malloc.h"
 
+/*
+** This can create fragementation so be careful. Look here when debugging
+** This can be used to create the defragor
+*/
+
 char	resize_large_block(t_block_zone *block, t_page_size ps)
 {
 	if (allocate_page(block, ps.size))
@@ -21,6 +26,10 @@ char	resize_large_block(t_block_zone *block, t_page_size ps)
 	}
 	return (0);
 }
+
+/*
+** May have not copied all the info over, this will have to be tested!
+*/
 
 void	*realloc_large_block(t_block_zone *block, size_t size)
 {

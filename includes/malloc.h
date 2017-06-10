@@ -248,6 +248,11 @@ char			malloc_zone(size_t size, t_block_zone **start_block);
 ** -> free_all_blocks
 ** -> double free error handling
 ** -> defragor needs to be added
+** -> calloc: just bzero everything in memory
+** -> valloc: The allocated memory is aligned on a page boundary
+** -> reallocf: identical to the realloc() function, except
+**    that it will free the passed pointer when the requested memory
+**    cannot be allocated.
 */
 
 /*
