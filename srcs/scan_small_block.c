@@ -23,9 +23,10 @@ char	compatable_small_block(t_small_list *small, size_t size)
 	}
 	else
 	{
-		small->next = size + 2;
-		small += small->next;
+		small->next = size + 1;
 		small->used = 1;
+		small += small->next;
+		small->used = 0;
 		small->next = 0;
 		return (1);
 	}
