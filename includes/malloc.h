@@ -35,6 +35,9 @@
 
 #include "../libft/includes/libft.h"
 
+//debug
+#include <stdio.h>//remove when done!
+
 /*
 ** ----------\
 ** Defines    |
@@ -85,6 +88,7 @@
 ** Shorten
 */
 # define BLOCK_END block->ps.size + block
+# define ADD_BLOCK_MEMBER ++block->active_members
 
 /*
 ** ----------\
