@@ -14,7 +14,7 @@
 
 char			is_in_block(t_block_zone *block, void *ptr)
 {
-	if ((void *)block < ptr && ptr < (void *)(block + block->ps.size))
+	if ((void *)block < ptr && ptr < (void *)((long)block + (long)block->ps.size))
 		return (1);
 	return (0);
 }
