@@ -17,7 +17,7 @@ void	free_tiny_block(t_block_zone *block, void *ptr)
 	t_tiny_list		*tiny;
 	t_block_zone	*parent_block;
 
-	tiny = (t_tiny_list *)(ptr - 1);
+	tiny = (t_tiny_list *)(ptr - sizeof(t_tiny_list));
 	if (!tiny->used)
 		malloc_error_quit("Attempting to double free pointer");
 	tiny->used = 0;
@@ -40,7 +40,7 @@ void	free_small_block(t_block_zone *block, void *ptr)
 	t_small_list		*small;
 	t_block_zone	*parent_block;
 
-	small = (t_small_list *)(ptr - 2);
+	small = (t_small_list *)(ptr - sizeof(t_small_list));
 	if (!small->used)
 		malloc_error_quit("Attempting to double free pointer");
 	small->used = 0;

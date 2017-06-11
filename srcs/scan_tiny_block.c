@@ -23,7 +23,7 @@ char	compatable_tiny_block(t_tiny_list *tiny, size_t size)
 	}
 	else
 	{		
-		tiny->next = size + 1;
+		tiny->next = size + sizeof(t_tiny_list);
 		tiny->used = 1;
 		tiny += tiny->next;
 		tiny->used = 0;
@@ -38,12 +38,12 @@ void	*scan_tiny_block(t_block_zone *block, size_t size)
 	t_tiny_list		*tiny;
 	size_t			distance;
 
-	distance = sizeof(t_block_zone) + size + 2;
+	distance = sizeof(t_block_zone) + size + TINY_TOLERANCE;
 	tiny = (t_tiny_list *)(block + sizeof(t_block_zone) + 1);
 	while (distance < (size_t)block->ps.size)
 	{
 		if (compatable_tiny_block(tiny, size))
-			return ((void *)(tiny + 1));
+			return ((void *)(tiny + sizeof(t_tiny_list)));
 		distance += tiny->next;
 		tiny += tiny->next;
 	}

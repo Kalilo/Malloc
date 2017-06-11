@@ -49,8 +49,8 @@
 ** Tiny is 128 but -1 for safety code
 ** Small is 32768 but -1 for safety code
 */
-# define TINY_MAX 127
-# define SMALL_MAX 32767
+# define TINY_MAX 120
+# define SMALL_MAX 32760
 
 # define MAX_INT 2147483647
 # define MIN_INT -2147483648
