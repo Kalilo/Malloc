@@ -45,11 +45,30 @@ int	main()
 	void	*test03[10];
 	for (int k = 0; k < 10; k++) {
 		test03[k] = malloc(1024);
-		printf("allocated test01[%d]: %p\n", k, test03[k]);
+		printf("allocated test03[%d]: %p\n", k, test03[k]);
 	}
 	for (int k = 0; k < 10; k++) {
-		printf("freeing test01[%d]: %p\n", k, test03[k]);
+		printf("freeing test03[%d]: %p\n", k, test03[k]);
 		free(test03[k]);
+	}
+	printf("\tSucess!\n");
+
+	/* Test 04 */
+	printf("Attempting To malloc, and free 100000 bytes:\n");
+	void	*test04 = malloc(100000);
+	free(test04);
+	printf("\tSucess!\n");
+
+	/* Test 05 */
+	printf("Attempting To malloc, and free 10 * 102400 bytes:\n");
+	void	*test05[10];
+	for (int k = 0; k < 10; k++) {
+		test05[k] = malloc(102400);
+		printf("allocated test05[%d]: %p\n", k, test05[k]);
+	}
+	for (int k = 0; k < 10; k++) {
+		printf("freeing test05[%d]: %p\n", k, test05[k]);
+		free(test05[k]);
 	}
 	printf("\tSucess!\n");
 
