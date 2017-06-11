@@ -17,7 +17,7 @@ void	free_tiny_block(t_block_zone *block, void *ptr)
 	t_tiny_list		*tiny;
 	t_block_zone	*parent_block;
 
-	tiny = (t_tiny_list *)(ptr - sizeof(t_tiny_list));
+	tiny = (t_tiny_list *)(ptr - (long)sizeof(t_tiny_list));
 	if (!tiny->used)
 		malloc_error_quit("Attempting to double free pointer");
 	tiny->used = 0;
@@ -52,7 +52,7 @@ void	free_small_block(t_block_zone *block, void *ptr)
 			parent_block = parent_block->next;
 		if (parent_block->next == block)
 		{
-			parent_block->next =block->next;
+			parent_block->next = block->next;
 			munmap(block, block->ps.size);
 		}
 	}
