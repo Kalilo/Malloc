@@ -105,5 +105,6 @@ int	main()
 	printf("\tSucess!\n");
 
 	/* Last Test */
+	printf("\nLast Test\n");
 	free(NULL);
 }
