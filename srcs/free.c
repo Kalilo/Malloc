@@ -72,8 +72,11 @@ void	free_large_block(t_block_zone *block)
 	}
 	else if (g_zones.large_block == block)
 	{
+		if (g_zones.large_block->next)
+			g_zones.large_block = g_zones.large_block->next;
+		else
+			g_zones.large_block = NULL;
 		munmap(block, block->ps.size);
-		g_zones.large_block = NULL;
 	}
 }
 
