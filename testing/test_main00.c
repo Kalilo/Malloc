@@ -104,6 +104,16 @@ int	main()
 		free(test06[k]);
 	printf("\tSucess!\n");
 
+	/* Test 07 */
+	printf("\nTest 07\n");
+	printf("Attempting to resize string\n");
+	void	*test07;
+	test07 = malloc(199);
+	ft_memcpy(test07, "Hello World!", 13);
+	test07 = realloc(test07, 20);
+	printf((!ft_strcmp(test07, "Hello World!")) ? "\tSucess!\n" : "\tFailed!\n");
+	free(test07);
+
 	/* Last Test */
 	printf("\nLast Test\n");
 	printf("Attempting to double free NULL\n");
