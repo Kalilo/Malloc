@@ -66,14 +66,20 @@ void		*malloc_small_block(size_t size)
 void		*malloc_large_block(size_t size)
 {
 	t_block_zone	*block;
+	t_block_zone	*new_block;
 
-	if (!malloc_zone(size, &g_zones.large_block))
+	new_block = NULL;
+	if (!malloc_zone(size, &new_block))
 		return (NULL);
 	block = g_zones.large_block;
-	while (block->next)
+	while (block && block->next)
 		block = block->next;
-	block->active_members = 1;
-	return ((void *)(block + sizeof(t_block_zone)));
+	if (block)
+		block->next = new_block;
+	else
+		g_zones.large_block = new_block;
+	new_block->active_members = 1;
+	return ((void *)(new_block + sizeof(t_block_zone)));
 }
 
 void		*malloc(size_t size)
