@@ -35,9 +35,33 @@
 **  libraries.
 */
 
-void	*realloc(void *ptr, size_t size)
+static void	copy_alloced_data(t_block_data data, void *new_mem,
+	void *ptr, size_t size)
+{
+	t_tiny_list		*tiny;
+	t_small_list	*small;
+
+	if (data.block_type == TINY_BLOCK)
+	{
+		tiny = (t_tiny_list *)((long)ptr - sizeof(t_tiny_list));
+		ft_memmove(new_mem, ptr,
+			(size < (size_t)tiny->next) ? size : tiny->next);
+	}
+	else if (data.block_type == SMALL_BLOCK)
+	{
+		small = (t_small_list *)((long)ptr - sizeof(t_small_list));
+		ft_memmove(new_mem, ptr,
+			(size < (size_t)small->next) ? size : small->next);
+	}
+	else if (data.block_type == LARGE_BLOCK)
+		ft_memmove(new_mem, ptr,
+			(data.block->ps.size - sizeof(t_block_data) - 1));
+}
+
+void		*realloc(void *ptr, size_t size)
 {
 	t_block_data	block_data;
+	void			*new_ptr;
 
 	init_memory();
 	block_data = find_block(ptr);
@@ -49,6 +73,8 @@ void	*realloc(void *ptr, size_t size)
 		return (ptr);
 	if (block_data.block_type == LARGE_BLOCK)
 		return (realloc_large_block(ptr, size));
+	new_ptr = malloc(size);
+	copy_alloced_data(block_data, new_ptr, ptr, size);
 	free(ptr);
-	return (malloc(size));
+	return (new_ptr);
 }
