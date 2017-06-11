@@ -40,7 +40,7 @@ void	free_small_block(t_block_zone *block, void *ptr)
 	t_small_list		*small;
 	t_block_zone	*parent_block;
 
-	small = (t_small_list *)(ptr - sizeof(t_small_list));
+	small = (t_small_list *)(ptr - (long)sizeof(t_small_list));
 	if (!small->used)
 		malloc_error_quit("Attempting to double free pointer");
 	small->used = 0;
@@ -108,6 +108,7 @@ void	free(void *ptr)
 		return ;
 	}
 	block_data = find_block(ptr);
+	printf("free: [block type: %i]\n", block_data.block_type);
 	if (block_data.block_type == TINY_BLOCK)
 		free_tiny_block(block_data.block, ptr);
 	else if (block_data.block_type == SMALL_BLOCK)
