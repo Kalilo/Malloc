@@ -25,7 +25,7 @@ char	compatable_small_block(t_small_list *small, size_t size)
 	{		
 		small->next = size + sizeof(t_small_list);
 		small->used = 1;
-		small += small->next;
+		small = (t_small_list *)((short)small->next + (long)small);
 		small->used = 0;
 		small->next = 0;
 		return (1);
@@ -44,8 +44,8 @@ void	*scan_small_block(t_block_zone *block, size_t size)
 	{
 		if (compatable_small_block(small, size))
 			return ((void *)((long)small + (long)sizeof(t_small_list)));
-		distance += small->next;
-		small += small->next;
+		distance += (short)small->next;
+		small = (t_small_list *)((short)small->next + (long)small);;
 	}
 	return (NULL);
 }
