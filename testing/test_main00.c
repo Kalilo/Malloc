@@ -107,4 +107,5 @@ int	main()
 	/* Last Test */
 	printf("\nLast Test\n");
 	free(NULL);
+	printf("\tSucess!\n");
 }
