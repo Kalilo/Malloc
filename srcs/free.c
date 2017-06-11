@@ -108,7 +108,6 @@ void	free(void *ptr)
 		return ;
 	}
 	block_data = find_block(ptr);
-	printf("free: [block type: %i]\n", block_data.block_type);
 	if (block_data.block_type == TINY_BLOCK)
 		free_tiny_block(block_data.block, ptr);
 	else if (block_data.block_type == SMALL_BLOCK)
