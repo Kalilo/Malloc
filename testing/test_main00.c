@@ -13,6 +13,10 @@
 #include "../includes/malloc.h"
 #include <stdio.h>
 
+/*
+** make && gcc ./malloc.so libft/libft.a testing/test_main00.c && ./a.out
+*/
+
 int	main()
 {
 	/* Test 00 */
@@ -72,5 +76,27 @@ int	main()
 	}
 	printf("\tSucess!\n");
 
+	/* Test 06 */
+	void	*test06[1000];
+	printf("Attempting To malloc, and free 1000 * 1 byte:\n");
+	for (int k = 0; k < 1000; k++)
+		test06[k] = malloc(1);
+	for (int k = 0; k < 1000; k++)
+		free(test06[k]);
+	printf("\tSucess!\n");
+	printf("Attempting To malloc, and free 1000 * 1 byte:\n");
+	for (int k = 0; k < 1000; k++)
+		test06[k] = malloc(1);
+	for (int k = 0; k < 1000; k++)
+		free(test06[k]);
+	printf("\tSucess!\n");
+	printf("Attempting To malloc, and free 1000 * 8 byte:\n");
+	for (int k = 0; k < 1000; k++)
+		test06[k] = malloc(8);
+	for (int k = 0; k < 1000; k++)
+		free(test06[k]);
+	printf("\tSucess!\n");
+
+	/* Last Test */
 	free(NULL);
 }
