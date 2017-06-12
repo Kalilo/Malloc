@@ -46,7 +46,7 @@ char	realloc_tiny_block(void *ptr, size_t size)
 	tiny = (t_tiny_list *)(ptr - sizeof(t_tiny_list));
 	if (size < (size_t)tiny->next && size < TINY_MAX)
 	{
-		SUCCESS_RETURN(size > tiny->next + TINY_TOLERANCE);
+		SUCCESS_RETURN(size > (size_t)tiny->next + TINY_TOLERANCE);
 		SUCCESS_RETURN(divide_tiny_block(tiny, size));
 	}
 	else if (size > tiny->next)

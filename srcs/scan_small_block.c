@@ -18,7 +18,7 @@ char	compatable_small_block(t_small_list *small, size_t size)
 		return (0);
 	if (small->next)
 	{
-		if (small->next < size && size > (small->next + SMALL_TOLERANCE))
+		if ((size_t)small->next < size && size > (size_t)(small->next + SMALL_TOLERANCE))
 			return (small->used = 1);
 	}
 	else

@@ -46,7 +46,7 @@ char	realloc_small_block(void *ptr, size_t size)
 	small = (t_small_list *)(ptr - sizeof(t_small_list));
 	if (size < (size_t)small->next && size < SMALL_MAX)
 	{
-		SUCCESS_RETURN(size > small->next + SMALL_TOLERANCE);
+		SUCCESS_RETURN(size > (size_t)small->next + SMALL_TOLERANCE);
 		SUCCESS_RETURN(divide_small_block(small, size));
 	}
 	else if (size > small->next)
