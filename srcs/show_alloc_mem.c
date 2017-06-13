@@ -17,7 +17,7 @@ void	ft_print_hex_l(unsigned long num)
 	static char *base = "0123456789ABCDEF";
 
 	if (num >= 16)
-		ft_print_hex(num / 16);
+		ft_print_hex_l(num / 16);
 	write(1, (base + (num % 16)), 1);
 }
 
