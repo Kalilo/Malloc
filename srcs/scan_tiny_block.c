@@ -18,11 +18,12 @@ char	compatable_tiny_block(t_tiny_list *tiny, size_t size)
 		return (0);
 	if (tiny->next)
 	{
-		if ((size_t)tiny->next < size && size > (size_t)(tiny->next + TINY_TOLERANCE))
+		if ((size_t)tiny->next < size && size > (size_t)(tiny->next +
+				TINY_TOLERANCE))
 			return (tiny->used = 1);
 	}
 	else
-	{		
+	{
 		tiny->next = size + sizeof(t_tiny_list);
 		tiny->used = 1;
 		tiny = (t_tiny_list *)((short)tiny->next + (long)tiny);

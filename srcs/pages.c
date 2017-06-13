@@ -23,9 +23,9 @@ t_page_size	round_to_pagesize(int size)
 	return (ps);
 }
 
-void	*allocate_page(void	*start_point, size_t size)
+void		*allocate_page(void *start_point, size_t size)
 {
-	void	*address;
+	void			*address;
 
 	if (start_point == NULL)
 		address = mmap(0, size, MMAP_PROT, MMAP_FLAGS, -1, 0);

@@ -37,7 +37,7 @@ void	free_tiny_block(t_block_zone *block, void *ptr)
 
 void	free_small_block(t_block_zone *block, void *ptr)
 {
-	t_small_list		*small;
+	t_small_list	*small;
 	t_block_zone	*parent_block;
 
 	small = (t_small_list *)(ptr - (long)sizeof(t_small_list));

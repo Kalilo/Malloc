@@ -82,7 +82,7 @@ void	show_alloc_block(t_block_zone *block, char type)
 	block = block->next;
 }
 
-void	show_alloc_mem()
+void	show_alloc_mem(void)
 {
 	t_block_zone	*block;
 

@@ -33,7 +33,7 @@
 # include <unistd.h>
 # include <pthread.h>
 
-#include "../libft/includes/libft.h"
+# include "../libft/includes/libft.h"
 
 /*
 ** ----------\
@@ -43,8 +43,8 @@
 
 /*
 ** Limits
-** Tiny is 128 but -1 for safety code
-** Small is 32768 but -1 for safety code
+** Tiny is 128 but -8 for safety code
+** Small is 32768 but -8 for safety code
 */
 # define TINY_MAX 120
 # define SMALL_MAX 32760
@@ -167,91 +167,92 @@ extern int				g_page_size;
 /*
 ** erorr_quit.c
 */
-void			malloc_error_quit(char *error_message);
+void					malloc_error_quit(char *error_message);
 
 /*
 ** find_block.c
 */
-char			is_in_block(t_block_zone *block, void *ptr);
-t_block_data	find_in_tiny_block(void *ptr);
-t_block_data	find_in_small_block(void *ptr);
-t_block_data	find_in_large_block(void *ptr);
-t_block_data	find_block(void *ptr);
+char					is_in_block(t_block_zone *block, void *ptr);
+t_block_data			find_in_tiny_block(void *ptr);
+t_block_data			find_in_small_block(void *ptr);
+t_block_data			find_in_large_block(void *ptr);
+t_block_data			find_block(void *ptr);
 
 /*
 ** free.c
 */
-void			free_tiny_block(t_block_zone *block, void *ptr);
-void			free_small_block(t_block_zone *block, void *ptr);
-void			free_large_block(t_block_zone *block);
-void			free_all_blocks(void);
-void			free(void *ptr);
+void					free_tiny_block(t_block_zone *block, void *ptr);
+void					free_small_block(t_block_zone *block, void *ptr);
+void					free_large_block(t_block_zone *block);
+void					free_all_blocks(void);
+void					free(void *ptr);
 
 /*
 ** init.c
 */
-void			init_memory(void);
+void					init_memory(void);
 
 /*
 ** malloc.c
 */
-void			*malloc_tiny_block(size_t size);
-void			*malloc_small_block(size_t size);
-void			*malloc_large_block(size_t size);
-void			*malloc(size_t size);
+void					*malloc_tiny_block(size_t size);
+void					*malloc_small_block(size_t size);
+void					*malloc_large_block(size_t size);
+void					*malloc(size_t size);
 
 /*
 ** pages.c
 */
-t_page_size		round_to_pagesize(int size);
-void			*allocate_page(void	*start_point, size_t size);
+t_page_size				round_to_pagesize(int size);
+void					*allocate_page(void	*start_point, size_t size);
 
 /*
 ** realloc_large_block.c
 */
-char			resize_large_block(t_block_zone *block, t_page_size ps);
-void			*realloc_large_block(t_block_zone *block, size_t size);
+char					resize_large_block(t_block_zone *block, t_page_size ps);
+void					*realloc_large_block(t_block_zone *block, size_t size);
 
 /*
 ** realloc_small_block.c
 */
-char			divide_small_block(t_small_list *small, size_t size);
-char			merge_small_block(t_small_list *small);
-char			realloc_small_block(void *ptr, size_t size);
+char					divide_small_block(t_small_list *small, size_t size);
+char					merge_small_block(t_small_list *small);
+char					realloc_small_block(void *ptr, size_t size);
 
 /*
 ** realloc_tiny_block.c
 */
-char			divide_tiny_block(t_tiny_list *tiny, size_t size);
-char			merge_tiny_block(t_tiny_list *tiny);
-char			realloc_tiny_block(void *ptr, size_t size);
+char					divide_tiny_block(t_tiny_list *tiny, size_t size);
+char					merge_tiny_block(t_tiny_list *tiny);
+char					realloc_tiny_block(void *ptr, size_t size);
 
 /*
 ** scan_small_block.c
 */
-char			compatable_small_block(t_small_list *small, size_t size);
-void			*scan_small_block(t_block_zone *block, size_t size);
+char					compatable_small_block(t_small_list *small,
+						size_t size);
+void					*scan_small_block(t_block_zone *block, size_t size);
 
 /*
 ** scan_tiny_block.c
 */
-char			compatable_tiny_block(t_tiny_list *tiny, size_t size);
-void			*scan_tiny_block(t_block_zone *block, size_t size);
+char					compatable_tiny_block(t_tiny_list *tiny, size_t size);
+void					*scan_tiny_block(t_block_zone *block, size_t size);
 
 /*
 ** show_alloc_mem.c
 */
-void			ft_print_hex_l(unsigned long num);
-void			show_tiny_list(t_block_zone *block);
-void			show_small_list(t_block_zone *block);
-void			show_alloc_block(t_block_zone *block, char type);
-void			show_alloc_mem();
+void					ft_print_hex_l(unsigned long num);
+void					show_tiny_list(t_block_zone *block);
+void					show_small_list(t_block_zone *block);
+void					show_alloc_block(t_block_zone *block, char type);
+void					show_alloc_mem(void);
 
 /*
 ** zones.c
 */
-char			extend_zone(t_block_zone *block, t_page_size page_size);
-char			malloc_zone(size_t size, t_block_zone **start_block);
+char					extend_zone(t_block_zone *block, t_page_size page_size);
+char					malloc_zone(size_t size, t_block_zone **start_block);
 
 /*
 ** Bonus Summary:
