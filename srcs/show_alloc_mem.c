@@ -29,7 +29,8 @@ void	show_tiny_list(t_block_zone *block)
 			ft_putstr(" : ");
 			ft_putnbr((long)tiny->next - sizeof(t_tiny_list));
 			g_total_mem += (long)tiny->next - sizeof(t_tiny_list);
-			ft_putstr(" bytes\n");
+			ft_putstr(((long)tiny->next - sizeof(t_tiny_list) > 1) ?
+				" bytes\n" : " byte\n");
 		}
 		tiny = (t_tiny_list *)((short)tiny->next + (long)tiny);
 	}
@@ -114,5 +115,5 @@ void	show_alloc_mem(void)
 	}
 	ft_putstr("Total : ");
 	ft_putnbr((long)g_total_mem);
-	ft_putstr(" bytes\n");
+	ft_putstr(((long)g_total_mem > 1) ? " bytes\n" : " byte\n");
 }
