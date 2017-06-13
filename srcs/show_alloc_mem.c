@@ -31,10 +31,13 @@ void	show_tiny_list(t_block_zone *block)
 		if (tiny->used)
 		{
 			ft_putstr("0x");
-			ft_print_hex_l((long)tiny + 1 + (long)block);
+			ft_print_hex_l((long)tiny + sizeof(t_tiny_list) + (long)block);
 			ft_putstr(" - 0x");
-			ft_print_hex_l((long)tiny + (long)tiny->next - 1 + (long)block);
-			ft_putchar('\n');
+			ft_print_hex_l((long)tiny + (long)tiny->next -
+				sizeof(t_tiny_list) + (long)block);
+			ft_putstr(" : ");
+			ft_putnbr((long)tiny->next - sizeof(t_tiny_list));
+			ft_putstr("bytes\n");
 		}
 		tiny = (t_tiny_list *)((short)tiny->next + (long)tiny);
 	}
@@ -50,10 +53,13 @@ void	show_small_list(t_block_zone *block)
 		if (small->used)
 		{
 			ft_putstr("0x");
-			ft_print_hex_l((long)small + 1 + (long)block);
+			ft_print_hex_l((long)small + sizeof(t_small_list) + (long)block);
 			ft_putstr(" - 0x");
-			ft_print_hex_l((long)small + (long)small->next - 1 + (long)block);
-			ft_putchar('\n');
+			ft_print_hex_l((long)small + (long)small->next -
+				sizeof(t_small_list) + (long)block);
+			ft_putstr(" : ");
+			ft_putnbr((long)small->next - sizeof(t_small_list));
+			ft_putstr("bytes\n");
 		}
 		small = (t_small_list *)((short)small->next + (long)small);
 	}
@@ -104,4 +110,5 @@ void	show_alloc_mem(void)
 		show_alloc_block(block, LARGE_BLOCK);
 		block = block->next;
 	}
+	//need to add totoal
 }

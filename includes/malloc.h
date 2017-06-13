@@ -170,6 +170,7 @@ void					ft_bzero(void *s, size_t n);
 void					*ft_memmove(void *dst, const void *src, size_t len);
 void					ft_putchar(char c);
 void					ft_putendl(char const *s);
+void					ft_putnbr(unsigned long num);
 void					ft_putstr(char const *s);
 
 /*

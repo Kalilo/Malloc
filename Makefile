@@ -45,6 +45,7 @@ SRCS_NAME = error_quit.c					\
 			ft_memmove.c					\
 			ft_putchar.c					\
 			ft_putendl.c					\
+			ft_putnbr.c						\
 			ft_putstr.c						\
 			init.c							\
 			malloc.c						\
