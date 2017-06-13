@@ -20,7 +20,7 @@
 # endif
 
 /*
-** make && gcc ./malloc.so libft/libft.a testing/test_main00.c && ./a.out
+** make && gcc ./malloc.so testing/test_main00.c && ./a.out
 */
 
 int	main()
