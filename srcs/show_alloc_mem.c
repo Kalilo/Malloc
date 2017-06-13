@@ -12,15 +12,6 @@
 
 #include "../includes/malloc.h"
 
-void	ft_print_hex_l(unsigned long num)
-{
-	static char *base = "0123456789ABCDEF";
-
-	if (num >= 16)
-		ft_print_hex_l(num / 16);
-	write(1, (base + (num % 16)), 1);
-}
-
 void	show_tiny_list(t_block_zone *block)
 {
 	t_tiny_list		*tiny;
@@ -37,7 +28,8 @@ void	show_tiny_list(t_block_zone *block)
 				sizeof(t_tiny_list) + (long)block);
 			ft_putstr(" : ");
 			ft_putnbr((long)tiny->next - sizeof(t_tiny_list));
-			ft_putstr("bytes\n");
+			g_total_mem += (long)tiny->next - sizeof(t_tiny_list);
+			ft_putstr(" bytes\n");
 		}
 		tiny = (t_tiny_list *)((short)tiny->next + (long)tiny);
 	}
@@ -59,10 +51,23 @@ void	show_small_list(t_block_zone *block)
 				sizeof(t_small_list) + (long)block);
 			ft_putstr(" : ");
 			ft_putnbr((long)small->next - sizeof(t_small_list));
-			ft_putstr("bytes\n");
+			g_total_mem += (long)small->next - sizeof(t_small_list);
+			ft_putstr(" bytes\n");
 		}
 		small = (t_small_list *)((short)small->next + (long)small);
 	}
+}
+
+void	show_large_block(t_block_zone *block)
+{
+	ft_putstr("0x");
+	ft_print_hex_l((long)block + (long)sizeof(t_block_zone));
+	g_total_mem += block->active_members;
+	ft_putstr(" - 0x");
+	ft_print_hex_l((long)block + (long)block->active_members);
+	ft_putstr(" : ");
+	ft_putnbr((long)block->active_members);
+	ft_putstr(" bytes\n");
 }
 
 void	show_alloc_block(t_block_zone *block, char type)
@@ -80,11 +85,7 @@ void	show_alloc_block(t_block_zone *block, char type)
 	else if (type == SMALL_BLOCK)
 		show_small_list(block);
 	else if (type == LARGE_BLOCK)
-	{
-		ft_putstr("0x");
-		ft_print_hex_l((long)block + (long)sizeof(t_block_zone));
-		ft_putchar('\n');
-	}
+		show_large_block(block);
 	block = block->next;
 }
 
@@ -93,6 +94,7 @@ void	show_alloc_mem(void)
 	t_block_zone	*block;
 
 	block = g_zones.tiny_block;
+	g_total_mem = 0;
 	while (block)
 	{
 		show_alloc_block(block, TINY_BLOCK);
@@ -110,5 +112,7 @@ void	show_alloc_mem(void)
 		show_alloc_block(block, LARGE_BLOCK);
 		block = block->next;
 	}
-	//need to add totoal
+	ft_putstr("Total : ");
+	ft_putnbr((long)g_total_mem);
+	ft_putstr(" bytes\n");
 }

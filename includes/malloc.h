@@ -124,7 +124,7 @@ typedef struct			s_block_zone
 {
 	struct s_block_zone	*next;
 	t_page_size			ps;
-	int					active_members;
+	size_t				active_members;
 }						t_block_zone;
 
 /*
@@ -153,11 +153,13 @@ typedef struct			s_block_data
 
 t_malloc_zones			g_zones;
 int						g_page_size;
+unsigned int			g_total_mem;
 
 # else
 
 extern t_malloc_zones	g_zones;
 extern int				g_page_size;
+extern unsigned int		g_total_mem;
 
 # endif
 
@@ -168,6 +170,7 @@ extern int				g_page_size;
 */
 void					ft_bzero(void *s, size_t n);
 void					*ft_memmove(void *dst, const void *src, size_t len);
+void					ft_print_hex_l(unsigned long num);
 void					ft_putchar(char c);
 void					ft_putendl(char const *s);
 void					ft_putnbr(unsigned long num);
@@ -257,9 +260,9 @@ void					*scan_tiny_block(t_block_zone *block, size_t size);
 /*
 ** show_alloc_mem.c
 */
-void					ft_print_hex_l(unsigned long num);
 void					show_tiny_list(t_block_zone *block);
 void					show_small_list(t_block_zone *block);
+void					show_large_block(t_block_zone *block);
 void					show_alloc_block(t_block_zone *block, char type);
 void					show_alloc_mem(void);
 
