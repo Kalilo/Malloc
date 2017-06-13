@@ -12,11 +12,18 @@
 
 NAME = malloc.so
 
-#ifndef $(HOSTTYPE)
+ifndef $(HOSTTYPE)
 HOSTTYPE = $(shell uname -m)_$(shell uname -s)
-#endef
+endif
+
+ifeq ($(shell uname -s), Darwin)
+SYS = OSX
+else
+SYS = UNKNOWN
+endif
 
 SYSNAME_PRE = libft_malloc_
+
 SYSNAME_EXT = .so
 
 SYSNAME = $(addprefix $(addprefix $(SYSNAME_PRE), $(HOSTTYPE)), $(SYSNAME_EXT))
@@ -67,10 +74,6 @@ INCLUDES = -I includes/ -I libft/includes
 HEADER = 	$(INCLUDES_PATH)malloc.h		\
 
 all: qme odir $(NAME)
-
-# ifeq ($(HOSTTYPE),)
-# 	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
-# endif
 
 define colourecho
 	@tput setaf 14
