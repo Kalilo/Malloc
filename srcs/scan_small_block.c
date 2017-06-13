@@ -45,7 +45,7 @@ void	*scan_small_block(t_block_zone *block, size_t size)
 		if (compatable_small_block(small, size))
 			return ((void *)((long)small + (long)sizeof(t_small_list)));
 		distance += (short)small->next;
-		small = (t_small_list *)((short)small->next + (long)small);;
+		small = (t_small_list *)((short)small->next + (long)small);
 	}
 	return (NULL);
 }
