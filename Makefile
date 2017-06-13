@@ -42,6 +42,7 @@ SRCS_NAME = error_quit.c					\
 			find_block.c					\
 			free.c							\
 			ft_bzero.c						\
+			ft_print_hex_l.c				\
 			ft_memmove.c					\
 			ft_putchar.c					\
 			ft_putendl.c					\
