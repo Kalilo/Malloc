@@ -34,6 +34,7 @@ SRCS_NAME = error_quit.c					\
 			realloc_tiny_block.c			\
 			scan_small_block.c				\
 			scan_tiny_block.c				\
+			show_alloc_mem.c				\
 			zones.c							\
 
 SRCS = $(addprefix $(SRCS_PATH), $(SRCS_NAME))

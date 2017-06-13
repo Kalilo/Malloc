@@ -239,6 +239,15 @@ char			compatable_tiny_block(t_tiny_list *tiny, size_t size);
 void			*scan_tiny_block(t_block_zone *block, size_t size);
 
 /*
+** show_alloc_mem.c
+*/
+void			ft_print_hex_l(unsigned long num);
+void			show_tiny_list(t_block_zone *block);
+void			show_small_list(t_block_zone *block);
+void			show_alloc_block(t_block_zone *block, char type);
+void			show_alloc_mem();
+
+/*
 ** zones.c
 */
 char			extend_zone(t_block_zone *block, t_page_size page_size);
