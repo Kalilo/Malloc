@@ -31,11 +31,12 @@ void	show_tiny_list(t_block_zone *block)
 		if (tiny->used)
 		{
 			ft_putstr("0x");
-			ft_print_hex_l((long)tiny);
-			ft_putstr(" - ");
-			ft_print_hex_l((long)tiny + (long)tiny->next);
+			ft_print_hex_l((long)tiny + 1 + (long)block);
+			ft_putstr(" - 0x");
+			ft_print_hex_l((long)tiny + (long)tiny->next - 1 + (long)block);
 			ft_putchar('\n');
 		}
+		tiny = (t_tiny_list *)((short)tiny->next + (long)tiny);
 	}
 }
 
@@ -49,38 +50,36 @@ void	show_small_list(t_block_zone *block)
 		if (small->used)
 		{
 			ft_putstr("0x");
-			ft_print_hex_l((long)small);
-			ft_putstr(" - ");
-			ft_print_hex_l((long)small + (long)small->next);
+			ft_print_hex_l((long)small + 1 + (long)block);
+			ft_putstr(" - 0x");
+			ft_print_hex_l((long)small + (long)small->next - 1 + (long)block);
 			ft_putchar('\n');
 		}
+		small = (t_small_list *)((short)small->next + (long)small);
 	}
 }
 
 void	show_alloc_block(t_block_zone *block, char type)
 {
-	while (block)
+	if (type == TINY_BLOCK)
+		ft_putstr("TINY : 0x");
+	else if (type == SMALL_BLOCK)
+		ft_putstr("SMALL : 0x");
+	else if (type == LARGE_BLOCK)
+		ft_putstr("LARGE : 0x");
+	ft_print_hex_l((long)(block));
+	ft_putchar('\n');
+	if (type == TINY_BLOCK)
+		show_tiny_list(block);
+	else if (type == SMALL_BLOCK)
+		show_small_list(block);
+	else if (type == LARGE_BLOCK)
 	{
-		if (type == TINY_BLOCK)
-			ft_putstr("TINY : 0x");
-		else if (type == SMALL_BLOCK)
-			ft_putstr("SMALL : 0x");
-		else if (type == LARGE_BLOCK)
-			ft_putstr("LARGE : 0x");
-		ft_print_hex_l((long)block);
+		ft_putstr("0x");
+		ft_print_hex_l((long)block + (long)sizeof(t_block_zone));
 		ft_putchar('\n');
-		if (type == TINY_BLOCK)
-			show_tiny_list(block);
-		else if (type == SMALL_BLOCK)
-			show_small_list(block);
-		else if (type == LARGE_BLOCK)
-		{
-			ft_putstr("0x");
-			ft_print_hex_l((long)block + (long)sizeof(t_block_zone));
-			ft_putchar('\n');
-		}
-		block = block->next;
 	}
+	block = block->next;
 }
 
 void	show_alloc_mem()
