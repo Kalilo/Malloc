@@ -41,6 +41,11 @@ SRCS_PATH = srcs/
 SRCS_NAME = error_quit.c					\
 			find_block.c					\
 			free.c							\
+			ft_bzero.c						\
+			ft_memmove.c					\
+			ft_putchar.c					\
+			ft_putendl.c					\
+			ft_putstr.c						\
 			init.c							\
 			malloc.c						\
 			pages.c							\
@@ -62,9 +67,9 @@ OBJS_NAME = $(SRCS_NAME:.c=.o)
 OBJS = $(addprefix $(OBJS_PATH), $(OBJS_NAME))
 
 #uncomment these to work on Mac and comment to work on Linux.
-LIBRARY = -L libft/ -lft
+LIBRARY =
 
-INCLUDES = -I includes/ -I libft/includes
+INCLUDES = -I includes/
 
 #uncomment these to work on Linux and comment to work on Mac.
 #LIBRARY = -L /usr/X11/lib -lmlx -lX11 -lm -lXext -L libft/ -lft
@@ -90,7 +95,6 @@ endef
 $(SYSNAME): $(NAME)
 
 $(NAME): $(OBJS)
-	@Make -C libft
 	@Make compile
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
@@ -109,13 +113,11 @@ odir:
 	@mkdir -p $(OBJS_PATH)
 
 clean:
-	@Make clean -C libft
 	@$(call colourecho, " - Clearing object files")
 	@rm -f $(OBJS)
 	@$(call colourecho, "clean done!")
 
 fclean: clean
-	@Make fclean -C libft
 	@$(call colourecho, "Clearing executable files")
 	@rm -f $(NAME) $(SYSNAME)
 	@$(call colourecho, "fclean done")

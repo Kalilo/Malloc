@@ -33,7 +33,10 @@
 # include <unistd.h>
 # include <pthread.h>
 
-# include "../libft/includes/libft.h"
+/*
+** Bonus
+*/
+# include <stdlib.h>
 
 /*
 ** ----------\
@@ -157,6 +160,17 @@ extern t_malloc_zones	g_zones;
 extern int				g_page_size;
 
 # endif
+
+/*
+** ----------\
+** Libft      |
+** ----------/
+*/
+void					ft_bzero(void *s, size_t n);
+void					*ft_memmove(void *dst, const void *src, size_t len);
+void					ft_putchar(char c);
+void					ft_putendl(char const *s);
+void					ft_putstr(char const *s);
 
 /*
 ** ----------\
