@@ -13,6 +13,12 @@
 #include "../includes/malloc.h"
 #include <stdio.h>
 
+# ifdef __APPLE__
+#  include <strings.h>
+# else
+#  include <string.h>
+# endif
+
 /*
 ** make && gcc ./malloc.so libft/libft.a testing/test_main00.c && ./a.out
 */
@@ -109,9 +115,9 @@ int	main()
 	printf("Attempting to resize string\n");
 	void	*test07;
 	test07 = malloc(199);
-	ft_memcpy(test07, "Hello World!", 13);
+	memcpy(test07, "Hello World!", 13);
 	test07 = realloc(test07, 20);
-	printf((!ft_strcmp(test07, "Hello World!")) ? "\tSucess!\n" : "\tFailed!\n");
+	printf((!strcmp(test07, "Hello World!")) ? "\tSucess!\n" : "\tFailed!\n");
 	free(test07);
 
 	/* Last Test */
