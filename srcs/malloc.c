@@ -79,7 +79,7 @@ void		*malloc_large_block(size_t size)
 	else
 		g_zones.large_block = new_block;
 	new_block->active_members = 1;
-	return ((void *)(new_block + sizeof(t_block_zone)));
+	return ((void *)((long)new_block + (long)sizeof(t_block_zone)));
 }
 
 void		*malloc(size_t size)
