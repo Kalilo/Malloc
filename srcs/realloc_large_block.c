@@ -47,6 +47,7 @@ void	*realloc_large_block(t_block_zone *block, size_t size)
 		return (NULL);
 	new_block->next = block->next;
 	new_block->ps = ps;
+	new_block->active_members = size;
 	parent_block->next = new_block;
 	munmap(block, block->ps.size);
 	return (NULL);
