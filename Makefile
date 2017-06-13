@@ -12,6 +12,15 @@
 
 NAME = malloc.so
 
+#ifndef $(HOSTTYPE)
+HOSTTYPE = $(shell uname -m)_$(shell uname -s)
+#endef
+
+SYSNAME_PRE = libft_malloc_
+SYSNAME_EXT = .so
+
+SYSNAME = $(addprefix $(addprefix $(SYSNAME_PRE), $(HOSTTYPE)), $(SYSNAME_EXT))
+
 CFLAGS =	-Wall -Wextra -Werror -fPIC -O3
 
 CFLAGS2 =	-shared -Wall -Wextra -Werror -O3
@@ -75,6 +84,8 @@ define colourecho2
 	@tput sgr0
 endef
 
+$(SYSNAME): $(NAME)
+
 $(NAME): $(OBJS)
 	@Make -C libft
 	@Make compile
@@ -86,10 +97,11 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 
 # From libft - need to complete, and use # TODO
 compile: qme odir $(OBJS)
-	@$(call colourecho, "Compiling $(NAME)")
-	@ar -rc $(NAME) $(OBJS)
-	@ranlib $(NAME)
+	@$(call colourecho, "Compiling $(SYSNAME)")
+	@ar -rc $(SYSNAME) $(OBJS)
+	@ranlib $(SYSNAME)
 	@$(call colourecho, "Done Compiling!")
+	@ln -f -s $(SYSNAME) $(NAME)
 
 odir:
 	@mkdir -p $(OBJS_PATH)
@@ -103,7 +115,7 @@ clean:
 fclean: clean
 	@Make fclean -C libft
 	@$(call colourecho, "Clearing executable files")
-	@rm -f $(NAME)
+	@rm -f $(NAME) $(SYSNAME)
 	@$(call colourecho, "fclean done")
 
 re: fclean all
