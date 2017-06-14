@@ -18,6 +18,7 @@ void	free_tiny_block(t_block_zone *block, void *ptr)
 	t_block_zone	*parent_block;
 
 	tiny = (t_tiny_list *)(ptr - (long)sizeof(t_tiny_list));
+	pthread_mutex_lock(&g_tiny_lock);
 	if (!tiny->used)
 		malloc_error_quit("Attempting to double free pointer");
 	tiny->used = 0;
@@ -33,6 +34,7 @@ void	free_tiny_block(t_block_zone *block, void *ptr)
 			munmap(block, block->ps.size);
 		}
 	}
+	pthread_mutex_unlock(&g_tiny_lock);
 }
 
 void	free_small_block(t_block_zone *block, void *ptr)
@@ -41,6 +43,7 @@ void	free_small_block(t_block_zone *block, void *ptr)
 	t_block_zone	*parent_block;
 
 	small = (t_small_list *)(ptr - (long)sizeof(t_small_list));
+	pthread_mutex_lock(&g_small_lock);
 	if (!small->used)
 		malloc_error_quit("Attempting to double free pointer");
 	small->used = 0;
@@ -56,6 +59,7 @@ void	free_small_block(t_block_zone *block, void *ptr)
 			munmap(block, block->ps.size);
 		}
 	}
+	pthread_mutex_unlock(&g_small_lock);
 }
 
 void	free_large_block(t_block_zone *block)
@@ -63,6 +67,7 @@ void	free_large_block(t_block_zone *block)
 	t_block_zone	*parent_block;
 
 	parent_block = g_zones.large_block;
+	pthread_mutex_lock(&g_large_lock);
 	while (parent_block && parent_block->next != block)
 		parent_block = parent_block->next;
 	if (parent_block->next == block)
@@ -78,13 +83,21 @@ void	free_large_block(t_block_zone *block)
 			g_zones.large_block = NULL;
 		munmap(block, block->ps.size);
 	}
+	pthread_mutex_unlock(&g_large_lock);
 }
+
+/*
+** Warning: This function should be used with caution when multithreading.
+*/
 
 void	free_all_blocks(void)
 {
 	t_block_zone	*block;
 	t_block_zone	*child_block;
 
+	pthread_mutex_lock(&g_tiny_lock);
+	pthread_mutex_lock(&g_small_lock);
+	pthread_mutex_lock(&g_large_lock);
 	block = g_zones.tiny_block;
 	while (block && (child_block = block->next) &&
 			munmap(block, block->ps.size) + 1)
@@ -98,6 +111,9 @@ void	free_all_blocks(void)
 			munmap(block, block->ps.size) + 1)
 		block = child_block;
 	ft_bzero(&g_zones, sizeof(t_malloc_zones));
+	pthread_mutex_unlock(&g_tiny_lock);
+	pthread_mutex_unlock(&g_small_lock);
+	pthread_mutex_unlock(&g_large_lock);
 }
 
 void	free(void *ptr)
