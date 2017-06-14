@@ -38,7 +38,8 @@ INCLUDES_PATH = includes/
 
 SRCS_PATH = srcs/
 
-SRCS_NAME = error_quit.c					\
+SRCS_NAME = calloc.c						\
+			error_quit.c					\
 			find_block.c					\
 			free.c							\
 			ft_bzero.c						\

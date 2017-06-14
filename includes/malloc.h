@@ -191,6 +191,11 @@ void					ft_putstr(char const *s);
 */
 
 /*
+** calloc.c
+*/
+void					*calloc(size_t count, size_t size);
+
+/*
 ** erorr_quit.c
 */
 void					malloc_error_quit(char *error_message);
