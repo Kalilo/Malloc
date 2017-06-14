@@ -158,9 +158,9 @@ submodule:
 test:
 	@make
 	@clear
-	@$(call colourecho2, "Test 00:")
+	@$(call colourecho2, "\nTest 00:")
 	@gcc ./malloc.so testing/test_main00.c && ./a.out
-	@$(call colourecho2, "Test 01:")
+	@$(call colourecho2, "\nTest 01:")
 	@gcc ./malloc.so testing/test_main01.c && ./a.out
 
 qme:
