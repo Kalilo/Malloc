@@ -72,12 +72,14 @@ void		*malloc_large_block(size_t size)
 	if (!malloc_zone(size, &new_block))
 		return (NULL);
 	block = g_zones.large_block;
+	pthread_mutex_lock(&g_large_lock);
 	while (block && block->next)
 		block = block->next;
 	if (block)
 		block->next = new_block;
 	else
 		g_zones.large_block = new_block;
+	pthread_mutex_unlock(&g_large_lock);
 	new_block->active_members = size;
 	return ((void *)((long)new_block + (long)sizeof(t_block_zone)));
 }
