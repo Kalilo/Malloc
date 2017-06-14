@@ -155,6 +155,14 @@ submodule:
 	fi;
 	@$(call colourecho, "done checking submodules")
 
+test:
+	@make
+	@clear
+	@$(call colourecho2, "Test 00:")
+	@gcc ./malloc.so testing/test_main00.c && ./a.out
+	@$(call colourecho2, "Test 01:")
+	@gcc ./malloc.so testing/test_main01.c && ./a.out
+
 qme:
 	@if [ ! -f author ]; then \
 		whoami > author; \
