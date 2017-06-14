@@ -157,6 +157,7 @@ unsigned int			g_total_mem;
 static pthread_mutex_t	g_tiny_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t	g_small_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_mutex_t	g_large_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t	g_lock_all = PTHREAD_MUTEX_INITIALIZER;
 
 # else
 
@@ -166,6 +167,7 @@ extern unsigned int		g_total_mem;
 extern pthread_mutex_t	g_tiny_lock;
 extern pthread_mutex_t	g_small_lock;
 extern pthread_mutex_t	g_large_lock;
+extern pthread_mutex_t	g_lock_all;
 
 # endif
 
@@ -233,7 +235,8 @@ void					*allocate_page(void	*start_point, size_t size);
 /*
 ** realloc_large_block.c
 */
-char					resize_large_block(t_block_zone *block, t_page_size ps);
+char					resize_large_block(t_block_zone *block, t_page_size ps,
+						size_t size);
 void					*realloc_large_block(t_block_zone *block, size_t size);
 
 /*

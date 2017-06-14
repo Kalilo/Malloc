@@ -95,6 +95,7 @@ void	show_alloc_mem(void)
 	t_block_zone	*block;
 
 	block = g_zones.tiny_block;
+	pthread_mutex_lock(&g_lock_all);
 	g_total_mem = 0;
 	while (block)
 	{
@@ -116,4 +117,5 @@ void	show_alloc_mem(void)
 	ft_putstr("Total : ");
 	ft_putnbr((long)g_total_mem);
 	ft_putstr(((long)g_total_mem > 1) ? " bytes\n" : " byte\n");
+	pthread_mutex_unlock(&g_lock_all);
 }
