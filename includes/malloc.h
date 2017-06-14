@@ -233,6 +233,11 @@ t_page_size				round_to_pagesize(int size);
 void					*allocate_page(void	*start_point, size_t size);
 
 /*
+** print.c
+*/
+void					print_total_usage(void);
+
+/*
 ** realloc_large_block.c
 */
 char					resize_large_block(t_block_zone *block, t_page_size ps,

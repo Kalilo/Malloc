@@ -114,8 +114,6 @@ void	show_alloc_mem(void)
 		show_alloc_block(block, LARGE_BLOCK);
 		block = block->next;
 	}
-	ft_putstr("Total : ");
-	ft_putnbr((long)g_total_mem);
-	ft_putstr(((long)g_total_mem > 1) ? " bytes\n" : " byte\n");
+	print_total_usage();
 	pthread_mutex_unlock(&g_lock_all);
 }

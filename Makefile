@@ -51,6 +51,7 @@ SRCS_NAME = error_quit.c					\
 			init.c							\
 			malloc.c						\
 			pages.c							\
+			print.c							\
 			realloc.c						\
 			realloc_large_block.c			\
 			realloc_small_block.c			\
