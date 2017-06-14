@@ -43,8 +43,13 @@ void	*scan_tiny_block(t_block_zone *block, size_t size)
 	tiny = (t_tiny_list *)((long)block + sizeof(t_block_zone) + 1);
 	while (distance < (size_t)block->ps.size)
 	{
+		pthread_mutex_lock(&g_tiny_lock);
 		if (compatable_tiny_block(tiny, size))
+		{
+			pthread_mutex_unlock(&g_tiny_lock);
 			return ((void *)((long)tiny + (long)sizeof(t_tiny_list)));
+		}
+		pthread_mutex_unlock(&g_tiny_lock);
 		distance += (short)tiny->next;
 		tiny = (t_tiny_list *)((short)tiny->next + (long)tiny);
 	}
