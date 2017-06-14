@@ -295,6 +295,7 @@ char					malloc_zone(size_t size, t_block_zone **start_block);
 ** Bonus Summary:
 ** -> free_all_blocks
 ** -> double free error handling
+** -> thread safe
 ** -> defragor needs to be added
 ** -> calloc: just bzero everything in memory
 ** -> valloc: The allocated memory is aligned on a page boundary
