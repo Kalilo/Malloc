@@ -154,12 +154,18 @@ typedef struct			s_block_data
 t_malloc_zones			g_zones;
 int						g_page_size;
 unsigned int			g_total_mem;
+static pthread_mutex_t	g_tiny_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t	g_small_lock = PTHREAD_MUTEX_INITIALIZER;
+static pthread_mutex_t	g_large_lock = PTHREAD_MUTEX_INITIALIZER;
 
 # else
 
 extern t_malloc_zones	g_zones;
 extern int				g_page_size;
 extern unsigned int		g_total_mem;
+extern pthread_mutex_t	g_tiny_lock;
+extern pthread_mutex_t	g_small_lock;
+extern pthread_mutex_t	g_large_lock;
 
 # endif
 
