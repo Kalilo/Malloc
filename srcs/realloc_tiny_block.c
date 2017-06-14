@@ -17,10 +17,12 @@ char	divide_tiny_block(t_tiny_list *tiny, size_t size)
 	t_tiny_list		*new_tiny;
 
 	ERROR_RETURN(size > tiny->next + sizeof(t_tiny_list) + TINY_TOLERANCE);
+	pthread_mutex_lock(&g_tiny_lock);
 	new_tiny = (tiny + size) + sizeof(t_tiny_list);
 	new_tiny->used = 0;
 	new_tiny->next = tiny->next - (size + sizeof(t_tiny_list));
 	tiny->next = size + sizeof(t_tiny_list);
+	pthread_mutex_unlock(&g_tiny_lock);
 	return (1);
 }
 
@@ -31,7 +33,9 @@ char	merge_tiny_block(t_tiny_list *tiny)
 	old_tiny = tiny + tiny->next + sizeof(t_tiny_list);
 	ERROR_RETURN(tiny->next + old_tiny->next + sizeof(t_tiny_list) >
 		TINY_MAX || old_tiny->used);
+	pthread_mutex_lock(&g_tiny_lock);
 	tiny->next += old_tiny->next + sizeof(t_tiny_list);
+	pthread_mutex_unlock(&g_tiny_lock);
 	return (1);
 }
 

@@ -17,10 +17,12 @@ char	divide_small_block(t_small_list *small, size_t size)
 	t_small_list		*new_small;
 
 	ERROR_RETURN(size > small->next + sizeof(t_small_list) + SMALL_TOLERANCE);
+	pthread_mutex_lock(&g_small_lock);
 	new_small = (small + size) + sizeof(t_small_list);
 	new_small->used = 0;
 	new_small->next = small->next - (size + sizeof(t_small_list));
 	small->next = size + sizeof(t_small_list);
+	pthread_mutex_unlock(&g_small_lock);
 	return (1);
 }
 
@@ -31,7 +33,9 @@ char	merge_small_block(t_small_list *small)
 	old_small = small + small->next + sizeof(t_small_list);
 	ERROR_RETURN(small->next + old_small->next +
 		sizeof(t_small_list) > SMALL_MAX || old_small->used);
+	pthread_mutex_lock(&g_small_lock);
 	small->next += old_small->next + sizeof(t_small_list);
+	pthread_mutex_unlock(&g_small_lock);
 	return (1);
 }
 
